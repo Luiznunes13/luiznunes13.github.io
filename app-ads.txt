@@ -1,4 +1,4 @@
-# app-ads.txt — house games studio
+# app-ads.txt — House Games Studio
 # Publicar na RAIZ do site informado como "Site" na ficha da Play Store
 # (ex.: https://SEU-SITE/app-ads.txt). Um arquivo vale para todos os jogos.
 #
