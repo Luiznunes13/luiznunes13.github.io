@@ -1,0 +1,18 @@
+# app-ads.txt — house games studio
+# Publicar na RAIZ do site informado como "Site" na ficha da Play Store
+# (ex.: https://SEU-SITE/app-ads.txt). Um arquivo vale para todos os jogos.
+#
+# Linha do AdMob (seu ID de editor):
+google.com, pub-6443678995889646, DIRECT, f08c47fec0942fa0
+#
+# Redes da mediação: cada uma mostra as linhas dela no próprio painel
+# (geralmente em "app-ads.txt" ou "Settings"). Cole aqui quando abrir a conta:
+# AppLovin:
+# Meta Audience Network:
+# Pangle:
+# Liftoff (Vungle):
+# InMobi:
+# Moloco:
+# PubMatic:
+# DT Exchange:
+# Unity Ads:

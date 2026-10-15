@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacidade do Block Puzzle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&family=Source+Sans+3:wght@400;600&display=swap">
+<style>
+/* Layout: coluna única de leitura, cabeçalho com mini-tabuleiro do jogo, seções curtas */
+:root {
+  --bg: #f6f7fb;
+  --surface: #ffffff;
+  --fg: #1d2340;
+  --muted: #5b6285;
+  --line: #dfe2ee;
+  --accent: #e85d43;
+  --cell: #e3e6f2;
+  --display: "Nunito", "Trebuchet MS", system-ui, sans-serif;
+  --body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141933; --surface: #1d2340; --fg: #eef0fa; --muted: #a5abc9;
+    --line: #2f3760; --accent: #ff8a6f; --cell: #2b3366; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #141933; --surface: #1d2340; --fg: #eef0fa; --muted: #a5abc9;
+  --line: #2f3760; --accent: #ff8a6f; --cell: #2b3366; color-scheme: dark;
+}
+body {
+  background: var(--bg); color: var(--fg);
+  font: 400 1.05rem/1.65 var(--body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+main { max-width: 42rem; margin: 0 auto; padding-block: 2.5rem 4rem; display: grid; gap: 2rem; }
+header { display: flex; gap: 1.25rem; align-items: center; }
+.grid { display: grid; grid-template-columns: repeat(4, 14px); gap: 3px; flex: none; }
+.grid i { width: 14px; height: 14px; border-radius: 3px; background: var(--cell); }
+.grid .y { background: #ffca28; } .grid .b { background: #42a5f5; }
+.grid .g { background: #50dcaa; } .grid .r { background: #ff7057; }
+h1 { font: 800 clamp(1.7rem, 5vw, 2.3rem)/1.15 var(--display); margin: 0; text-wrap: balance; }
+.meta { color: var(--muted); margin: .25rem 0 0; font-size: .95rem; }
+h2 { font: 700 1.2rem/1.3 var(--display); margin: 0 0 .4rem; text-wrap: balance; }
+section { border-top: 1px solid var(--line); padding-top: 1.5rem; }
+p, ul { margin: 0 0 .75rem; }
+ul { padding-left: 1.2rem; }
+li { margin-bottom: .35rem; }
+.summary { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 1.1rem 1.25rem; }
+.summary strong { color: var(--accent); }
+.contact { font-weight: 600; user-select: all; word-break: break-all; }
+</style>
+
+</head>
+<body>
+<main>
+  <header>
+    <div class="grid" aria-hidden="true">
+      <i></i><i></i><i></i><i class="y"></i>
+      <i></i><i></i><i class="y"></i><i class="y"></i>
+      <i class="b"></i><i></i><i class="g"></i><i class="r"></i>
+      <i class="b"></i><i class="g"></i><i class="g"></i><i class="r"></i>
+    </div>
+    <div>
+      <h1>Política de Privacidade do Block Puzzle</h1>
+      <p class="meta">house games studio · Atualizada em 15 de outubro de 2026 (v3)</p>
+    </div>
+  </header>
+
+  <div class="summary">
+    <p><strong>Resumo:</strong> o Block Puzzle não pede cadastro e nós não coletamos nem vendemos dados pessoais. Seu progresso fica salvo só no seu aparelho. O jogo exibe anúncios do Google AdMob, que usa alguns dados do aparelho para mostrar e medir os anúncios, como explicado abaixo.</p>
+  </div>
+
+  <section>
+    <h2>Quem somos</h2>
+    <p>O Block Puzzle é um jogo de quebra-cabeça de blocos para Android, publicado na Google Play pelo desenvolvedor <strong>house games studio</strong>. Esta política explica o que acontece com as informações quando você joga.</p>
+  </section>
+
+  <section>
+    <h2>O que fica salvo no seu aparelho</h2>
+    <p>Para o jogo funcionar, guardamos no armazenamento interno do app, só no seu celular:</p>
+    <ul>
+      <li>recorde, moedas, nível, temas desbloqueados e a partida em andamento;</li>
+      <li>suas preferências de som, música e vibração;</li>
+      <li>um registro técnico das partidas (pontuação e número de jogadas), usado para equilibrar a dificuldade dentro do próprio aparelho.</li>
+    </ul>
+    <p>Esses dados não são enviados para nós nem para terceiros. Desinstalar o app ou limpar os dados dele apaga tudo.</p>
+  </section>
+
+  <section>
+    <h2>O que não coletamos</h2>
+    <ul>
+      <li>Nome, e-mail, telefone ou qualquer cadastro.</li>
+      <li>Localização, contatos, fotos ou arquivos.</li>
+    </ul>
+    <p>Nós não recebemos nenhum dado dos anúncios. O que o Google AdMob usa está descrito na seção de anúncios.</p>
+  </section>
+
+  <section>
+    <h2>Conexão com a internet</h2>
+    <p>O app pode baixar de um servidor nosso um arquivo de configuração do jogo (por exemplo, o ajuste de dificuldade). Esse download não envia dados seus. Como em qualquer acesso à internet, o servidor recebe o endereço IP do aparelho, que não é usado para identificar você.</p>
+  </section>
+
+  <section>
+    <h2>Permissões do Android</h2>
+    <ul>
+      <li><strong>Vibração:</strong> para o retorno tátil ao encaixar peças. Pode ser desligada nos Ajustes do jogo.</li>
+      <li><strong>Internet e estado da rede:</strong> para baixar a configuração do jogo.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Anúncios (Google AdMob)</h2>
+    <p>O jogo exibe anúncios em tela cheia entre partidas e anúncios opcionais com recompensa (por exemplo, para continuar uma partida). Eles são fornecidos pelo Google AdMob, que pode coletar e usar:</p>
+    <ul>
+      <li>o identificador de publicidade do aparelho e outros identificadores do dispositivo;</li>
+      <li>localização aproximada, a partir do endereço IP;</li>
+      <li>interações com os anúncios e dados de desempenho e falhas do app.</li>
+    </ul>
+    <p>Para preencher os espaços de anúncio, o AdMob pode fazer um leilão entre outras redes parceiras (mediação), que também podem receber esses dados para exibir e medir anúncios: AppLovin, Meta Audience Network, Pangle (ByteDance), Liftoff (Vungle), InMobi, Moloco, PubMatic, Digital Turbine (DT Exchange) e Unity Ads. Cada uma tem a própria política de privacidade.</p>
+    <p>Esses dados são usados pelo Google e pelos parceiros para exibir anúncios, medir resultados e evitar fraudes. Saiba mais em <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener">Como o Google usa dados de sites e apps parceiros</a>. Você pode redefinir ou desativar o identificador de publicidade nas configurações do Android (Google › Anúncios). Usuários da Europa e do Reino Unido veem uma tela de consentimento e podem mudar a escolha em Ajustes › Privacidade dos anúncios.</p>
+  </section>
+
+  <section>
+    <h2>Compras no app</h2>
+    <p>Compras opcionais (como remover anúncios ou pacotes de moedas) são processadas pelo Google Play. Nós não recebemos dados do seu cartão nem da sua forma de pagamento; recebemos só a confirmação de que o item foi comprado, para entregá-lo no jogo.</p>
+  </section>
+
+  <section>
+    <h2>Crianças</h2>
+    <p>O jogo é destinado a maiores de 13 anos e não coleta dados pessoais de ninguém. Os anúncios são configurados para conteúdo adequado ao público geral.</p>
+  </section>
+
+  <section>
+    <h2>Seus direitos (LGPD)</h2>
+    <p>Como não guardamos dados pessoais em nossos servidores, não temos informações suas para acessar, corrigir ou excluir. Os dados do jogo ficam no seu aparelho e você pode apagá-los a qualquer momento limpando os dados do app. Para os dados usados em anúncios, você pode gerenciar o identificador de publicidade no Android e consultar as ferramentas de privacidade do Google.</p>
+  </section>
+
+  <section>
+    <h2>Mudanças nesta política</h2>
+    <p>Quando esta política mudar, a data no topo da página será atualizada.</p>
+  </section>
+
+  <section>
+    <h2>Contato</h2>
+    <p>Dúvidas sobre privacidade: <span class="contact">filipepereiranunes@gmail.com</span></p>
+  </section>
+</main>
+
+</body>
+</html>
