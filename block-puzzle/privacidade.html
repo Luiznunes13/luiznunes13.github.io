@@ -2,83 +2,177 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Privacidade do Block Puzzle House</title>
+<meta name="description" content="Como o Block Puzzle House trata suas informações: o que fica no aparelho, anúncios do Google AdMob e seus direitos pela LGPD.">
+<meta name="theme-color" content="#0b0f22">
+<link rel="icon" href="../block-puzzle-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&family=Source+Sans+3:wght@400;600&display=swap">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Fredoka:wght@400;500;600&display=swap">
 <style>
-/* Layout: coluna única de leitura, cabeçalho com mini-tabuleiro do jogo, seções curtas */
+/* Layout: mesma identidade do site (fundo escuro com grade e brilhos, Unbounded + Fredoka).
+   Barra do estúdio · cabeçalho com ícone do jogo · resumo em destaque · índice lateral fixo + texto em coluna de leitura · rodapé. */
 :root {
-  --bg: #f6f7fb;
-  --surface: #ffffff;
-  --fg: #1d2340;
-  --muted: #5b6285;
-  --line: #dfe2ee;
-  --accent: #e85d43;
-  --cell: #e3e6f2;
-  --display: "Nunito", "Trebuchet MS", system-ui, sans-serif;
-  --body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --bg: #0b0f22; --bg-2: #11173a;
+  --surface: rgba(255,255,255,.04); --surface-2: rgba(255,255,255,.07);
+  --line: rgba(255,255,255,.09); --line-2: rgba(255,255,255,.16);
+  --fg: #f3f1e8; --muted: #a3a9c9; --text: #d6d9ec;
+  --yellow: #ffc928; --blue: #42a5f5; --green: #4fd8a8; --coral: #ff6b57; --purple: #8b5cf6;
+  --accent: #ffc928;
+  --display: "Unbounded", "Arial Black", system-ui, sans-serif;
+  --body: "Fredoka", "Trebuchet MS", system-ui, sans-serif;
+  --gutter: max(16px, env(safe-area-inset-left, 0px));
+  color-scheme: dark;
 }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #141933; --surface: #1d2340; --fg: #eef0fa; --muted: #a5abc9;
-    --line: #2f3760; --accent: #ff8a6f; --cell: #2b3366; color-scheme: dark;
-  }
+:root:not([data-theme="light"]) { color-scheme: dark; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #0b0f22; } }
+:root[data-theme="dark"] { --bg: #0b0f22; }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 400 1.06rem/1.7 var(--body); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+body::before {
+  content: ""; position: fixed; inset: 0; z-index: -2; pointer-events: none;
+  background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 64px 64px; mask-image: radial-gradient(ellipse 90% 70% at 50% 20%, #000 35%, transparent 100%);
 }
-:root[data-theme="dark"] {
-  --bg: #141933; --surface: #1d2340; --fg: #eef0fa; --muted: #a5abc9;
-  --line: #2f3760; --accent: #ff8a6f; --cell: #2b3366; color-scheme: dark;
+body::after {
+  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(40vmax 40vmax at -5% -10%, color-mix(in srgb, var(--accent) 26%, transparent), transparent 60%),
+    radial-gradient(45vmax 45vmax at 105% 100%, rgba(66,90,245,.30), transparent 60%);
 }
-body {
-  background: var(--bg); color: var(--fg);
-  font: 400 1.05rem/1.65 var(--body);
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
-}
-main { max-width: 42rem; margin: 0 auto; padding-block: 2.5rem 4rem; display: grid; gap: 2rem; }
-header { display: flex; gap: 1.25rem; align-items: center; }
-.grid { display: grid; grid-template-columns: repeat(4, 14px); gap: 3px; flex: none; }
-.grid i { width: 14px; height: 14px; border-radius: 3px; background: var(--cell); }
-.grid .y { background: #ffca28; } .grid .b { background: #42a5f5; }
-.grid .g { background: #50dcaa; } .grid .r { background: #ff7057; }
-h1 { font: 800 clamp(1.7rem, 5vw, 2.3rem)/1.15 var(--display); margin: 0; text-wrap: balance; }
-.meta { color: var(--muted); margin: .25rem 0 0; font-size: .95rem; }
-h2 { font: 700 1.2rem/1.3 var(--display); margin: 0 0 .4rem; text-wrap: balance; }
-section { border-top: 1px solid var(--line); padding-top: 1.5rem; }
-p, ul { margin: 0 0 .75rem; }
-ul { padding-left: 1.2rem; }
-li { margin-bottom: .35rem; }
-.summary { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 1.1rem 1.25rem; }
-.summary strong { color: var(--accent); }
-.contact { font-weight: 600; user-select: all; word-break: break-all; }
-</style>
+a { color: var(--accent); text-underline-offset: 3px; }
+.wrap { width: 100%; max-width: 1100px; margin: 0 auto; padding-inline: var(--gutter); }
 
+.top { position: sticky; top: 0; z-index: 20; background: rgba(11,15,34,.78); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; height: 72px; gap: 1rem; }
+.logo { display: flex; align-items: center; gap: .7rem; text-decoration: none; color: var(--fg); }
+.mark { display: grid; grid-template-columns: repeat(3, 9px); gap: 2px; }
+.mark i { width: 9px; height: 9px; border-radius: 2px; background: var(--c, transparent); }
+.logo b { font: 800 .95rem/1 var(--display); letter-spacing: .02em; }
+.logo small { display: block; font: 500 .62rem/1 var(--display); letter-spacing: .32em; color: var(--muted); margin-top: .3rem; }
+.back { display: inline-flex; align-items: center; gap: .45rem; color: var(--fg); text-decoration: none; font-weight: 500; padding: .55rem 1rem; border: 1px solid var(--line-2); border-radius: 999px; transition: background .2s; white-space: nowrap; }
+.back:hover { background: var(--surface-2); }
+
+.hero { padding-block: clamp(3rem, 8vw, 5.5rem) 2.5rem; }
+.eyebrow { font: 500 .76rem/1 var(--display); letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
+.eyebrow::after { content: ""; display: block; width: 40px; height: 2px; background: var(--fg); margin-top: .9rem; }
+.hero-row { display: flex; gap: 1.6rem; align-items: center; margin-top: 1.8rem; }
+.hero-row img { width: 96px; height: 96px; border-radius: 24px; flex: none; box-shadow: 0 14px 40px rgba(0,0,0,.45); }
+h1 { font: 800 clamp(1.8rem, 4.6vw, 3.2rem)/1.08 var(--display); margin: 0 0 .7rem; }
+h1 span { color: var(--accent); }
+.meta { color: var(--muted); margin: 0; }
+.meta b { color: var(--fg); font-weight: 500; }
+
+.summary {
+  margin-top: 2.5rem; padding: 1.6rem 1.8rem; border-radius: 24px; border: 1px solid var(--line-2);
+  background: linear-gradient(140deg, color-mix(in srgb, var(--accent) 14%, transparent), rgba(255,255,255,.02));
+  font-size: 1.12rem; color: var(--fg); position: relative; overflow: hidden;
+}
+.summary::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: var(--accent); }
+.summary p { margin: 0; }
+
+.layout { display: grid; grid-template-columns: 240px 1fr; gap: 3.5rem; padding-bottom: 5rem; align-items: start; }
+.toc { position: sticky; top: 96px; }
+.toc h2 { font: 500 .72rem/1 var(--display); letter-spacing: .18em; text-transform: uppercase; color: var(--muted); margin: 0 0 1rem; }
+.toc ol { list-style: none; padding: 0; margin: 0; display: grid; gap: .15rem; counter-reset: t; }
+.toc a { display: flex; gap: .7rem; color: var(--muted); text-decoration: none; padding: .45rem .7rem; border-radius: 10px; font-size: .95rem; line-height: 1.35; transition: background .2s, color .2s; }
+.toc a::before { counter-increment: t; content: counter(t, decimal-leading-zero); font: 500 .7rem/1.9 var(--display); opacity: .6; }
+.toc a:hover, .toc a.active { color: var(--fg); background: var(--surface-2); }
+.toc a.active::before { color: var(--accent); opacity: 1; }
+
+article { max-width: 46rem; min-width: 0; }
+article section { padding: 2rem 0; border-bottom: 1px solid var(--line); counter-increment: s; }
+article section:first-child { padding-top: 0; }
+article section:last-child { border-bottom: 0; }
+article h2 { font: 700 clamp(1.2rem, 2.4vw, 1.5rem)/1.25 var(--display); margin: 0 0 1rem; display: flex; gap: .8rem; align-items: baseline; }
+article h2::before { content: counter(s, decimal-leading-zero); font: 500 .8rem/1 var(--display); color: var(--accent); flex: none; }
+article { counter-reset: s; }
+article p { color: var(--text); margin: 0 0 1rem; }
+article p:last-child { margin-bottom: 0; }
+article ul { margin: 0 0 1rem; padding: 0; list-style: none; display: grid; gap: .6rem; }
+article li { color: var(--text); padding-left: 1.6rem; position: relative; }
+article li::before { content: ""; position: absolute; left: 0; top: .62em; width: 9px; height: 9px; border-radius: 3px; background: var(--accent); }
+article strong { color: var(--fg); font-weight: 600; }
+.contact { display: inline-block; font-weight: 600; color: var(--fg); background: var(--surface-2); border: 1px solid var(--line-2); padding: .2rem .7rem; border-radius: 999px; word-break: break-all; }
+
+footer { border-top: 1px solid var(--line); padding-block: 2.5rem calc(2rem + env(safe-area-inset-bottom, 0px)); }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 1rem 2rem; justify-content: space-between; align-items: center; color: var(--muted); font-size: .92rem; }
+footer nav { display: flex; gap: 1.4rem; flex-wrap: wrap; }
+footer a { color: var(--fg); text-decoration: none; opacity: .85; }
+footer a:hover { opacity: 1; text-decoration: underline; }
+
+@media (max-width: 860px) {
+  .layout { grid-template-columns: 1fr; gap: 2rem; }
+  .toc { position: static; border: 1px solid var(--line); border-radius: 20px; padding: 1.2rem; background: var(--surface); }
+}
+@media (max-width: 520px) {
+  .hero-row { flex-direction: column; align-items: flex-start; gap: 1.2rem; }
+  .hero-row img { width: 76px; height: 76px; border-radius: 20px; }
+  .back span { display: none; }
+  .summary { padding: 1.3rem 1.3rem 1.3rem 1.5rem; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+</style>
 </head>
 <body>
-<main>
-  <header>
-    <div class="grid" aria-hidden="true">
-      <i></i><i></i><i></i><i class="y"></i>
-      <i></i><i></i><i class="y"></i><i class="y"></i>
-      <i class="b"></i><i></i><i class="g"></i><i class="r"></i>
-      <i class="b"></i><i class="g"></i><i class="g"></i><i class="r"></i>
-    </div>
-    <div>
-      <h1>Política de Privacidade do Block Puzzle House</h1>
-      <p class="meta">House Games Studio · Atualizada em 15 de outubro de 2026 (v3)</p>
-    </div>
-  </header>
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="../" aria-label="House Games Studio — página inicial">
+      <span class="mark" aria-hidden="true">
+        <i></i><i style="--c:var(--coral)"></i><i></i>
+        <i style="--c:var(--coral)"></i><i style="--c:var(--yellow)"></i><i style="--c:var(--coral)"></i>
+        <i style="--c:var(--blue)"></i><i style="--c:var(--yellow)"></i><i style="--c:var(--green)"></i>
+      </span>
+      <span><b>HOUSE GAMES</b><small>STUDIO</small></span>
+    </a>
+    <a class="back" href="../#jogos">
+      <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M13 8H3M7.5 3.5 3 8l4.5 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Voltar ao site</span>
+    </a>
+  </div>
+</header>
 
+<main>
+  <div class="wrap hero">
+    <div class="eyebrow">Política de privacidade</div>
+    <div class="hero-row">
+      <img src="../block-puzzle-icon.png" alt="Ícone do Block Puzzle House" width="96" height="96">
+      <div>
+        <h1>Política de Privacidade do <span>Block Puzzle House</span></h1>
+        <p class="meta"><b>House Games Studio</b> · Atualizada em 15 de outubro de 2026 (v3)</p>
+      </div>
+    </div>
   <div class="summary">
     <p><strong>Resumo:</strong> o Block Puzzle House não pede cadastro e nós não coletamos nem vendemos dados pessoais. Seu progresso fica salvo só no seu aparelho. O jogo exibe anúncios do Google AdMob, que usa alguns dados do aparelho para mostrar e medir os anúncios, como explicado abaixo.</p>
   </div>
+  </div>
 
-  <section>
+  <div class="wrap layout">
+    <nav class="toc" aria-label="Nesta página">
+      <h2>Nesta página</h2>
+      <ol>
+        <li><a href="#quem-somos">Quem somos</a></li>
+        <li><a href="#o-que-fica-salvo-no-seu-aparelho">O que fica salvo no seu aparelho</a></li>
+        <li><a href="#o-que-nao-coletamos">O que não coletamos</a></li>
+        <li><a href="#conexao-com-a-internet">Conexão com a internet</a></li>
+        <li><a href="#permissoes-do-android">Permissões do Android</a></li>
+        <li><a href="#anuncios-google-admob">Anúncios (Google AdMob)</a></li>
+        <li><a href="#compras-no-app">Compras no app</a></li>
+        <li><a href="#criancas">Crianças</a></li>
+        <li><a href="#seus-direitos-lgpd">Seus direitos (LGPD)</a></li>
+        <li><a href="#mudancas-nesta-politica">Mudanças nesta política</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ol>
+    </nav>
+    <article>
+    <section id="quem-somos">
     <h2>Quem somos</h2>
     <p>O Block Puzzle House é um jogo de quebra-cabeça de blocos para Android, publicado na Google Play pelo desenvolvedor <strong>House Games Studio</strong>. Esta política explica o que acontece com as informações quando você joga.</p>
   </section>
 
-  <section>
+    <section id="o-que-fica-salvo-no-seu-aparelho">
     <h2>O que fica salvo no seu aparelho</h2>
     <p>Para o jogo funcionar, guardamos no armazenamento interno do app, só no seu celular:</p>
     <ul>
@@ -89,7 +183,7 @@ li { margin-bottom: .35rem; }
     <p>Esses dados não são enviados para nós nem para terceiros. Desinstalar o app ou limpar os dados dele apaga tudo.</p>
   </section>
 
-  <section>
+    <section id="o-que-nao-coletamos">
     <h2>O que não coletamos</h2>
     <ul>
       <li>Nome, e-mail, telefone ou qualquer cadastro.</li>
@@ -98,12 +192,12 @@ li { margin-bottom: .35rem; }
     <p>Nós não recebemos nenhum dado dos anúncios. O que o Google AdMob usa está descrito na seção de anúncios.</p>
   </section>
 
-  <section>
+    <section id="conexao-com-a-internet">
     <h2>Conexão com a internet</h2>
     <p>O app pode baixar de um servidor nosso um arquivo de configuração do jogo (por exemplo, o ajuste de dificuldade). Esse download não envia dados seus. Como em qualquer acesso à internet, o servidor recebe o endereço IP do aparelho, que não é usado para identificar você.</p>
   </section>
 
-  <section>
+    <section id="permissoes-do-android">
     <h2>Permissões do Android</h2>
     <ul>
       <li><strong>Vibração:</strong> para o retorno tátil ao encaixar peças. Pode ser desligada nos Ajustes do jogo.</li>
@@ -111,7 +205,7 @@ li { margin-bottom: .35rem; }
     </ul>
   </section>
 
-  <section>
+    <section id="anuncios-google-admob">
     <h2>Anúncios (Google AdMob)</h2>
     <p>O jogo exibe anúncios em tela cheia entre partidas e anúncios opcionais com recompensa (por exemplo, para continuar uma partida). Eles são fornecidos pelo Google AdMob, que pode coletar e usar:</p>
     <ul>
@@ -123,31 +217,54 @@ li { margin-bottom: .35rem; }
     <p>Esses dados são usados pelo Google e pelos parceiros para exibir anúncios, medir resultados e evitar fraudes. Saiba mais em <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener">Como o Google usa dados de sites e apps parceiros</a>. Você pode redefinir ou desativar o identificador de publicidade nas configurações do Android (Google › Anúncios). Usuários da Europa e do Reino Unido veem uma tela de consentimento e podem mudar a escolha em Ajustes › Privacidade dos anúncios.</p>
   </section>
 
-  <section>
+    <section id="compras-no-app">
     <h2>Compras no app</h2>
     <p>Compras opcionais (como remover anúncios ou pacotes de moedas) são processadas pelo Google Play. Nós não recebemos dados do seu cartão nem da sua forma de pagamento; recebemos só a confirmação de que o item foi comprado, para entregá-lo no jogo.</p>
   </section>
 
-  <section>
+    <section id="criancas">
     <h2>Crianças</h2>
     <p>O jogo é destinado a maiores de 13 anos e não coleta dados pessoais de ninguém. Os anúncios são configurados para conteúdo adequado ao público geral.</p>
   </section>
 
-  <section>
+    <section id="seus-direitos-lgpd">
     <h2>Seus direitos (LGPD)</h2>
     <p>Como não guardamos dados pessoais em nossos servidores, não temos informações suas para acessar, corrigir ou excluir. Os dados do jogo ficam no seu aparelho e você pode apagá-los a qualquer momento limpando os dados do app. Para os dados usados em anúncios, você pode gerenciar o identificador de publicidade no Android e consultar as ferramentas de privacidade do Google.</p>
   </section>
 
-  <section>
+    <section id="mudancas-nesta-politica">
     <h2>Mudanças nesta política</h2>
     <p>Quando esta política mudar, a data no topo da página será atualizada.</p>
   </section>
 
-  <section>
+    <section id="contato">
     <h2>Contato</h2>
     <p>Dúvidas sobre privacidade: <span class="contact">filipepereiranunes@gmail.com</span></p>
   </section>
+    </article>
+  </div>
 </main>
 
+<footer>
+  <div class="wrap">
+    <span>© 2026 House Games Studio · São Paulo, Brasil</span>
+    <nav aria-label="Rodapé">
+      <a href="../">Início</a>
+      <a href="../block-puzzle/privacidade.html">Privacidade Block Puzzle House</a>
+      <a href="../brain-house/privacidade.html">Privacidade Brain House</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const links = [...document.querySelectorAll('.toc a')];
+  const map = new Map(links.map(a => [a.getAttribute('href').slice(1), a]));
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) { links.forEach(l => l.classList.remove('active')); map.get(e.target.id)?.classList.add('active'); }
+  }), { rootMargin: '-30% 0px -60% 0px' });
+  document.querySelectorAll('article section[id]').forEach(s => io.observe(s));
+})();
+</script>
 </body>
 </html>

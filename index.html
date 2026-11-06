@@ -2,47 +2,679 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>House Games Studio</title>
-<meta name="description" content="Jogos casuais para Android feitos por um estúdio independente de São Paulo.">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Fredoka:wght@500;600&display=swap">
+<meta name="description" content="House Games Studio: estúdio independente de São Paulo que cria jogos casuais de puzzle e raciocínio para Android.">
+<meta name="theme-color" content="#0b0f22">
+<meta property="og:title" content="House Games Studio">
+<meta property="og:description" content="Jogos pequenos que cabem no seu dia. Puzzle e raciocínio para Android, feitos em São Paulo.">
+<meta property="og:image" content="https://luiznunes13.github.io/block-puzzle-icon.png">
+<link rel="icon" href="block-puzzle-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Fredoka:wght@400;500;600&display=swap">
 <style>
-:root{--bg:#1d2340;--card:#262d52;--fg:#f2f3fb;--muted:#a9afcf;--accent:#ffca28}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font:500 1.05rem/1.6 "Fredoka",system-ui,sans-serif;padding:0 16px}
-main{max-width:44rem;margin:0 auto;padding:3rem 0 4rem}
-h1{font:400 clamp(2.2rem,7vw,3.2rem)/1.05 "Lilita One",system-ui,sans-serif;margin:0 0 .5rem}
-.lead{color:var(--muted);margin:0 0 2.5rem}
-.game{margin-bottom:1rem;display:flex;gap:1.25rem;align-items:center;background:var(--card);border-radius:20px;padding:1.25rem}
-.game img{width:96px;height:96px;border-radius:22px;flex:none}
-.game h2{font:400 1.6rem/1.1 "Lilita One",system-ui,sans-serif;margin:0 0 .25rem}
-.game p{margin:0 0 .5rem;color:var(--muted)}
-a{color:var(--accent)}
-footer{margin-top:3rem;color:var(--muted);font-size:.9rem}
-@media (max-width:480px){.game{flex-direction:column;align-items:flex-start}}
+/* Layout: cabeçalho fixo · hero em tela cheia com tabuleiro animado · vitrine de jogos com celulares ·
+   em produção · estúdio · contatos por assunto · rodapé. Fundo escuro com grade e brilhos nas cores dos blocos. */
+:root {
+  --bg: #0b0f22;
+  --bg-2: #11173a;
+  --surface: rgba(255,255,255,.04);
+  --surface-2: rgba(255,255,255,.07);
+  --line: rgba(255,255,255,.09);
+  --line-2: rgba(255,255,255,.16);
+  --fg: #f3f1e8;
+  --muted: #a3a9c9;
+  --yellow: #ffc928;
+  --blue: #42a5f5;
+  --green: #4fd8a8;
+  --coral: #ff6b57;
+  --pink: #f472b6;
+  --purple: #8b5cf6;
+  --display: "Unbounded", "Arial Black", system-ui, sans-serif;
+  --body: "Fredoka", "Trebuchet MS", system-ui, sans-serif;
+  --gutter: max(16px, env(safe-area-inset-left, 0px));
+  --max: 1200px;
+  color-scheme: dark;
+}
+:root:not([data-theme="light"]) { color-scheme: dark; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #0b0f22; } }
+:root[data-theme="dark"] { --bg: #0b0f22; }
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 400 1.05rem/1.6 var(--body);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+/* grade de fundo + brilhos */
+body::before {
+  content: ""; position: fixed; inset: 0; z-index: -2; pointer-events: none;
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 90% 80% at 50% 30%, #000 40%, transparent 100%);
+}
+body::after {
+  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(40vmax 40vmax at -5% -10%, rgba(255,107,87,.28), transparent 60%),
+    radial-gradient(45vmax 45vmax at 105% 95%, rgba(66,90,245,.38), transparent 60%),
+    radial-gradient(30vmax 30vmax at 100% 0%, rgba(139,92,246,.18), transparent 60%);
+}
+a { color: inherit; }
+img { max-width: 100%; display: block; }
+.wrap { width: 100%; max-width: var(--max); margin: 0 auto; padding-inline: var(--gutter); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+/* ---------- header ---------- */
+.top {
+  position: fixed; inset: 0 0 auto 0; z-index: 50;
+  transition: background .3s, border-color .3s;
+  border-bottom: 1px solid transparent;
+}
+.top.scrolled { background: rgba(11,15,34,.78); backdrop-filter: blur(14px); border-color: var(--line); }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; height: 76px; }
+.logo { display: flex; align-items: center; gap: .7rem; text-decoration: none; }
+.mark { display: grid; grid-template-columns: repeat(3, 9px); gap: 2px; }
+.mark i { width: 9px; height: 9px; border-radius: 2px; background: var(--c, transparent); }
+.logo b { font: 800 .95rem/1 var(--display); letter-spacing: .02em; }
+.logo small { display: block; font: 500 .62rem/1 var(--display); letter-spacing: .32em; color: var(--muted); margin-top: .3rem; }
+.nav { display: flex; gap: 2rem; align-items: center; }
+.nav a { text-decoration: none; color: var(--muted); font-weight: 500; transition: color .2s; }
+.nav a:hover { color: var(--fg); }
+.nav .pill {
+  color: var(--bg); background: var(--yellow); padding: .55rem 1.1rem; border-radius: 999px; font-weight: 600;
+}
+.nav .pill:hover { color: var(--bg); filter: brightness(1.08); }
+.menu-btn {
+  display: none; width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--line-2);
+  background: transparent; color: var(--fg); cursor: pointer; place-items: center;
+}
+.menu-btn span, .menu-btn span::before, .menu-btn span::after {
+  display: block; width: 18px; height: 2px; background: currentColor; border-radius: 2px; position: relative; content: "";
+  transition: transform .25s, opacity .25s;
+}
+.menu-btn span::before { position: absolute; top: -6px; }
+.menu-btn span::after { position: absolute; top: 6px; }
+.open .menu-btn span { background: transparent; }
+.open .menu-btn span::before { transform: translateY(6px) rotate(45deg); }
+.open .menu-btn span::after { transform: translateY(-6px) rotate(-45deg); }
+
+/* ---------- hero ---------- */
+.hero { min-height: 100svh; display: flex; align-items: center; padding-top: 96px; padding-bottom: 72px; position: relative; }
+.hero .wrap { display: grid; grid-template-columns: 1.15fr .85fr; gap: 3rem; align-items: center; }
+.eyebrow { font: 500 .78rem/1 var(--display); letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
+.eyebrow::after { content: ""; display: block; width: 40px; height: 2px; background: var(--fg); margin-top: .9rem; }
+h1 {
+  font: 800 clamp(2.4rem, 6.4vw, 5rem)/1.04 var(--display);
+  letter-spacing: -.01em; margin: 1.6rem 0 1.4rem;
+}
+h1 em { font-style: normal; color: var(--yellow); }
+.hero p.lead { font-size: clamp(1.05rem, 1.6vw, 1.25rem); color: var(--muted); max-width: 34rem; margin: 0 0 2.2rem; }
+.ctas { display: flex; gap: .8rem; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: .55rem; text-decoration: none; font-weight: 600;
+  padding: .9rem 1.5rem; border-radius: 999px; border: 1px solid var(--line-2); transition: transform .2s, background .2s;
+}
+.btn:hover { transform: translateY(-2px); background: var(--surface-2); }
+.btn.primary { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.btn.primary:hover { background: #fff; }
+.board-wrap { position: relative; justify-self: center; width: min(100%, 440px); aspect-ratio: 1; }
+.board-wrap::before {
+  content: ""; position: absolute; inset: 8%; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,201,40,.35), transparent 70%); filter: blur(30px);
+}
+#hero-board { position: relative; width: 100%; height: 100%; }
+.scroll-hint {
+  position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: .4rem;
+  font-size: .78rem; color: var(--muted); text-decoration: none; letter-spacing: .08em;
+}
+.scroll-hint svg { animation: bob 2s ease-in-out infinite; }
+@keyframes bob { 50% { transform: translateY(6px); } }
+
+/* ---------- sections ---------- */
+section { padding-block: clamp(4rem, 10vw, 8rem); }
+.sec-head { display: flex; justify-content: space-between; align-items: end; gap: 2rem; margin-bottom: 3rem; flex-wrap: wrap; }
+h2 { font: 700 clamp(1.9rem, 4.4vw, 3.2rem)/1.1 var(--display); margin: 1.2rem 0 0; }
+.sec-head p { color: var(--muted); max-width: 26rem; margin: 0; }
+
+/* game showcase */
+.game {
+  position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center;
+  border: 1px solid var(--line-2); border-radius: 32px; padding: clamp(1.5rem, 4vw, 3.5rem);
+  background: linear-gradient(140deg, var(--surface-2), rgba(255,255,255,.015));
+  overflow: hidden; margin-bottom: 1.5rem;
+}
+.game::before {
+  content: ""; position: absolute; width: 60%; aspect-ratio: 1; right: -15%; top: -30%; border-radius: 50%;
+  background: radial-gradient(circle, var(--glow), transparent 65%); opacity: .35; pointer-events: none;
+}
+.game.alt { grid-template-columns: 1fr 1fr; }
+.game.alt .phone-col { order: -1; }
+.game-info { position: relative; }
+.game-id { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.4rem; }
+.game-id img { width: 76px; height: 76px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,.4); }
+.tag {
+  display: inline-block; font: 500 .7rem/1 var(--display); letter-spacing: .14em; text-transform: uppercase;
+  padding: .45rem .7rem; border-radius: 999px; border: 1px solid var(--line-2); color: var(--muted);
+}
+.game h3 { font: 800 clamp(1.6rem, 3.4vw, 2.5rem)/1.05 var(--display); margin: .5rem 0 0; }
+.game p { color: var(--muted); margin: 0 0 1.4rem; max-width: 30rem; }
+.chips { display: flex; flex-wrap: wrap; gap: .5rem; margin: 0 0 1.8rem; padding: 0; list-style: none; }
+.chips li { background: var(--surface-2); border-radius: 999px; padding: .35rem .85rem; font-size: .92rem; }
+.store-row { display: flex; gap: .8rem; flex-wrap: wrap; align-items: center; }
+.store {
+  display: inline-flex; align-items: center; gap: .7rem; padding: .6rem 1.1rem .6rem .9rem;
+  border-radius: 14px; background: #000; border: 1px solid var(--line-2); text-decoration: none; color: #fff;
+}
+.store small { display: block; font-size: .66rem; letter-spacing: .06em; text-transform: uppercase; opacity: .7; line-height: 1.1; }
+.store b { font-weight: 600; font-size: 1.05rem; line-height: 1.1; }
+.store[aria-disabled="true"] { opacity: .75; cursor: default; }
+.link-sm { color: var(--muted); font-size: .92rem; }
+.link-sm:hover { color: var(--fg); }
+
+/* phone mockup */
+.phone-col { display: flex; justify-content: center; position: relative; }
+.phone {
+  width: 250px; aspect-ratio: 9/19; border-radius: 40px; padding: 10px;
+  background: linear-gradient(160deg, #3a3f5c, #15182b); box-shadow: 0 30px 80px rgba(0,0,0,.55), inset 0 0 0 1px rgba(255,255,255,.12);
+  transform: rotate(var(--tilt, -4deg)); transition: transform .5s;
+}
+.game:hover .phone { transform: rotate(0deg) translateY(-6px); }
+.screen {
+  width: 100%; height: 100%; border-radius: 31px; overflow: hidden; position: relative;
+  background: #1d2340; display: flex; flex-direction: column; align-items: center; padding: 34px 16px 18px;
+}
+.screen::before { content: ""; position: absolute; top: 10px; left: 50%; width: 70px; height: 18px; border-radius: 10px; background: #000; transform: translateX(-50%); }
+.hud { width: 100%; display: flex; justify-content: space-between; font: 600 .78rem/1 var(--body); color: #c9cdea; margin: 6px 0 14px; }
+.hud b { font: 800 1.35rem/1 var(--display); color: #fff; display: block; margin-top: .25rem; }
+.mini-board { display: grid; grid-template-columns: repeat(8, 1fr); gap: 3px; width: 100%; padding: 6px; background: #151a36; border-radius: 12px; }
+.mini-board i { aspect-ratio: 1; border-radius: 4px; background: #262d57; transition: background .25s, transform .25s; }
+.mini-board i.on { background: var(--c); box-shadow: inset 0 -3px 0 rgba(0,0,0,.22), inset 0 3px 0 rgba(255,255,255,.25); }
+.mini-board i.flash { background: #fff; transform: scale(.85); }
+.tray { display: flex; gap: 14px; justify-content: center; margin-top: auto; padding-top: 14px; }
+.piece { display: grid; gap: 2px; }
+.piece i { width: 14px; height: 14px; border-radius: 3px; background: var(--c); }
+.piece i.x { background: transparent; }
+
+.screen { container-type: inline-size; }
+.stroop-screen { background: linear-gradient(180deg, #2b2160, #1a1640); }
+.stroop-timer { width: 100%; height: 6px; border-radius: 6px; background: rgba(255,255,255,.12); overflow: hidden; margin-bottom: 1.4rem; }
+.stroop-timer i { display: block; height: 100%; width: 100%; background: var(--green); transform-origin: left; }
+.stroop-q { font-size: .8rem; color: #c9c4ef; text-align: center; margin: 0 0 1rem; }
+.stroop-word { font: 800 min(2.4rem, calc(100cqi / var(--n, 6)))/1 var(--display); white-space: nowrap; max-width: 100%; margin: .6rem 0 auto; transition: color .2s, transform .2s; }
+.stroop-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; width: 100%; margin-top: 1.2rem; }
+.stroop-btns span { height: 46px; border-radius: 12px; background: var(--c); box-shadow: inset 0 -4px 0 rgba(0,0,0,.25); transition: transform .15s; }
+.stroop-btns span.hit { transform: scale(.92); outline: 3px solid #fff; }
+
+/* em produção */
+.wip-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+.wip {
+  border: 1px dashed var(--line-2); border-radius: 26px; padding: 2rem; background: var(--surface);
+  position: relative; overflow: hidden; min-height: 260px; display: flex; flex-direction: column;
+}
+.wip .art { height: 90px; margin-bottom: 1.4rem; display: flex; align-items: end; gap: 4px; }
+.wip .tag { align-self: flex-start; }
+.wip h3 { font: 700 1.4rem/1.15 var(--display); margin: .8rem 0 .5rem; }
+.wip p { color: var(--muted); margin: 0; }
+.wip .progress { margin-top: auto; padding-top: 1.4rem; }
+.bar { height: 6px; border-radius: 6px; background: var(--surface-2); overflow: hidden; }
+.bar i { display: block; height: 100%; border-radius: 6px; background: var(--c); width: var(--w); }
+.progress small { display: flex; justify-content: space-between; color: var(--muted); font-size: .85rem; margin-bottom: .45rem; }
+
+/* estúdio */
+.studio { display: grid; grid-template-columns: .9fr 1.1fr; gap: 3rem; align-items: start; }
+.studio-copy p { color: var(--muted); font-size: 1.12rem; }
+.stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line-2); border: 1px solid var(--line-2); border-radius: 24px; overflow: hidden; margin-top: 2rem; }
+.stats div { background: var(--bg-2); padding: 1.4rem 1.5rem; }
+.stats b { display: block; font: 800 2rem/1 var(--display); }
+.stats span { color: var(--muted); font-size: .92rem; }
+.pillars { display: grid; gap: 1rem; }
+.pillar { display: grid; grid-template-columns: 56px 1fr; gap: 1.2rem; padding: 1.6rem; border-radius: 22px; border: 1px solid var(--line); background: var(--surface); transition: border-color .25s, transform .25s; }
+.pillar:hover { border-color: var(--line-2); transform: translateX(4px); }
+.pillar .ico { width: 56px; height: 56px; border-radius: 16px; display: grid; place-items: center; background: var(--c); color: #111; font: 800 1.2rem var(--display); }
+.pillar h3 { font: 700 1.1rem/1.3 var(--display); margin: .15rem 0 .35rem; }
+.pillar p { margin: 0; color: var(--muted); }
+
+/* contato */
+.contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1px; background: var(--line-2); border: 1px solid var(--line-2); border-radius: 26px; overflow: hidden; }
+.contact { background: var(--bg-2); padding: 2rem; text-decoration: none; display: flex; flex-direction: column; gap: .6rem; transition: background .2s; min-height: 200px; }
+.contact:hover { background: #182050; }
+.contact .dot { width: 14px; height: 14px; border-radius: 4px; background: var(--c); }
+.contact h3 { font: 700 1.15rem/1.3 var(--display); margin: .4rem 0 0; }
+.contact p { color: var(--muted); margin: 0; flex: 1; }
+.contact span { font-weight: 600; display: inline-flex; align-items: center; gap: .4rem; }
+.contact:hover span svg { transform: translateX(4px); }
+.contact span svg { transition: transform .2s; }
+
+/* footer */
+footer { border-top: 1px solid var(--line); padding-block: 3rem calc(2rem + env(safe-area-inset-bottom, 0px)); }
+footer .wrap { display: grid; grid-template-columns: 1.2fr repeat(3, 1fr); gap: 2rem; }
+footer h4 { font: 500 .72rem/1 var(--display); letter-spacing: .18em; text-transform: uppercase; color: var(--muted); margin: 0 0 1rem; }
+footer ul { list-style: none; padding: 0; margin: 0; display: grid; gap: .5rem; }
+footer a { color: var(--fg); text-decoration: none; opacity: .85; }
+footer a:hover { opacity: 1; text-decoration: underline; }
+.copy { color: var(--muted); font-size: .88rem; margin-top: 1rem; }
+
+/* reveal */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .8s ease; }
+.reveal.in { opacity: 1; transform: none; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 900px) {
+  .hero .wrap, .game, .game.alt, .studio { grid-template-columns: 1fr; }
+  .game.alt .phone-col { order: 0; }
+  .board-wrap { width: min(80%, 340px); }
+  footer .wrap { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 760px) {
+  .menu-btn { display: grid; }
+  .nav {
+    position: fixed; inset: 76px 0 auto 0; flex-direction: column; align-items: stretch; gap: 0;
+    background: rgba(11,15,34,.97); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line);
+    padding: .5rem var(--gutter) 1.5rem; transform: translateY(-8px); opacity: 0; pointer-events: none; transition: .25s;
+  }
+  .nav a { padding: 1rem 0; border-bottom: 1px solid var(--line); font-size: 1.1rem; color: var(--fg); }
+  .nav .pill { margin-top: 1rem; text-align: center; border: 0; }
+  .open .nav { transform: none; opacity: 1; pointer-events: auto; }
+  .open .top { background: rgba(11,15,34,.97); }
+  .phone { width: 220px; }
+  .hero { padding-top: 110px; }
+  .hero .wrap { gap: 2rem; }
+  .board-wrap { order: -1; width: min(70%, 260px); }
+  .scroll-hint { display: none; }
+}
+@media (max-width: 480px) {
+  footer .wrap { grid-template-columns: 1fr; }
+  .stats b { font-size: 1.6rem; }
+  .pillar { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .reveal { opacity: 1; transform: none; }
+  html { scroll-behavior: auto; }
+}
 </style>
 </head>
 <body>
+
+<header class="top" id="top">
+  <div class="wrap">
+    <a class="logo" href="#inicio" aria-label="House Games Studio — início">
+      <span class="mark" aria-hidden="true">
+        <i></i><i style="--c:var(--coral)"></i><i></i>
+        <i style="--c:var(--coral)"></i><i style="--c:var(--yellow)"></i><i style="--c:var(--coral)"></i>
+        <i style="--c:var(--blue)"></i><i style="--c:var(--yellow)"></i><i style="--c:var(--green)"></i>
+      </span>
+      <span><b>HOUSE GAMES</b><small>STUDIO</small></span>
+    </a>
+    <nav class="nav" id="nav" aria-label="Principal">
+      <a href="#jogos">Jogos</a>
+      <a href="#estudio">Estúdio</a>
+      <a class="pill" href="#contato">Fale com a gente</a>
+    </nav>
+    <button class="menu-btn" id="menuBtn" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav"><span></span></button>
+  </div>
+</header>
+
 <main>
-  <h1>House Games Studio</h1>
-  <p class="lead">Jogos casuais para Android, feitos com carinho em São Paulo.</p>
-  <section class="game">
-    <img src="block-puzzle-icon.png" alt="Ícone do Block Puzzle House">
-    <div>
-      <h2>Block Puzzle House</h2>
-      <p>Encaixe as peças no tabuleiro 8×8, complete linhas e colunas e bata seu recorde.</p>
-      <a href="block-puzzle/privacidade.html">Política de privacidade</a>
+  <!-- HERO -->
+  <section class="hero" id="inicio">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="eyebrow">Nossa missão</div>
+        <h1>Jogos pequenos que <em>cabem</em> no seu dia.</h1>
+        <p class="lead">Somos um estúdio independente de São Paulo. Fazemos puzzles e desafios de raciocínio para Android: partidas rápidas, regras claras e aquela vontade de jogar só mais uma.</p>
+        <div class="ctas">
+          <a class="btn primary" href="#jogos">Conheça os jogos
+            <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v11M3 8.5 8 13.5l5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a class="btn" href="#estudio">Sobre o estúdio</a>
+        </div>
+      </div>
+      <div class="board-wrap reveal" aria-hidden="true">
+        <canvas id="hero-board"></canvas>
+      </div>
+    </div>
+    <a class="scroll-hint" href="#jogos">
+      <svg width="18" height="28" viewBox="0 0 18 28" aria-hidden="true"><path d="M9 1v25M2 19l7 7 7-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      role para descobrir
+    </a>
+  </section>
+
+  <!-- JOGOS -->
+  <section id="jogos">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div>
+          <div class="eyebrow">Nossos jogos</div>
+          <h2>Feitos para jogar<br>em qualquer pausa.</h2>
+        </div>
+        <p>Cada jogo começa com uma ideia simples e só sai do estúdio depois de muita partida de teste.</p>
+      </div>
+
+      <article class="game reveal" style="--glow:var(--yellow)">
+        <div class="game-info">
+          <div class="game-id">
+            <img src="block-puzzle-icon.png" alt="Ícone do Block Puzzle House" width="76" height="76">
+            <div>
+              <span class="tag">Puzzle · Offline</span>
+              <h3>Block Puzzle House</h3>
+            </div>
+          </div>
+          <p>Encaixe as peças no tabuleiro 8×8, complete linhas e colunas e faça combos para limpar tudo de uma vez. Sem cronômetro, sem pressa: só você, o tabuleiro e o seu recorde.</p>
+          <ul class="chips">
+            <li>Tabuleiro 8×8</li><li>Combos</li><li>Joga sem internet</li><li>Grátis</li>
+          </ul>
+          <div class="store-row">
+            <a class="store" aria-disabled="true" role="link" title="Em breve no Google Play">
+              <svg width="24" height="26" viewBox="0 0 24 26" aria-hidden="true"><path d="M1.2.6 13.4 13 1.2 25.4A1.6 1.6 0 0 1 .5 24V2c0-.6.3-1.1.7-1.4Z" fill="#00d7fe"/><path d="m17.5 8.9-4.1 4.1-12.2-12.4c.4-.3 1-.3 1.6 0Z" fill="#00f076"/><path d="M13.4 13 17.5 17.1 2.8 25.4c-.6.3-1.2.3-1.6 0Z" fill="#ff3a44"/><path d="m17.5 8.9 4.7 2.7c1.1.6 1.1 2.2 0 2.8l-4.7 2.7L13.4 13Z" fill="#ffd500"/></svg>
+              <span><small>Em breve no</small><b>Google Play</b></span>
+            </a>
+            <a class="link-sm" href="block-puzzle/privacidade.html">Política de privacidade</a>
+          </div>
+        </div>
+        <div class="phone-col">
+          <div class="phone" style="--tilt:5deg">
+            <div class="screen">
+              <div class="hud"><span>PONTOS<b id="bp-score">1 240</b></span><span style="text-align:right">RECORDE<b>3 870</b></span></div>
+              <div class="mini-board" id="bp-board"></div>
+              <div class="tray">
+                <div class="piece" style="grid-template-columns:repeat(2,14px);--c:var(--blue)"><i></i><i></i><i></i><i class="x"></i></div>
+                <div class="piece" style="grid-template-columns:repeat(3,14px);--c:var(--green)"><i></i><i></i><i></i></div>
+                <div class="piece" style="grid-template-columns:repeat(2,14px);--c:var(--coral)"><i></i><i></i><i></i><i></i></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="game alt reveal" style="--glow:var(--purple)">
+        <div class="game-info">
+          <div class="game-id">
+            <img src="brain-house-icon.png" alt="Ícone do Brain House" width="76" height="76">
+            <div>
+              <span class="tag">Raciocínio · Diário</span>
+              <h3>Brain House</h3>
+            </div>
+          </div>
+          <p>Treino rápido de memória e atenção com minijogos clássicos da psicologia cognitiva: Stroop, sequência e N-back. Todo dia aparece um desafio novo para manter a cabeça afiada.</p>
+          <ul class="chips">
+            <li>Stroop</li><li>Sequência</li><li>N-back</li><li>Desafio diário</li>
+          </ul>
+          <div class="store-row">
+            <a class="store" aria-disabled="true" role="link" title="Em breve no Google Play">
+              <svg width="24" height="26" viewBox="0 0 24 26" aria-hidden="true"><path d="M1.2.6 13.4 13 1.2 25.4A1.6 1.6 0 0 1 .5 24V2c0-.6.3-1.1.7-1.4Z" fill="#00d7fe"/><path d="m17.5 8.9-4.1 4.1-12.2-12.4c.4-.3 1-.3 1.6 0Z" fill="#00f076"/><path d="M13.4 13 17.5 17.1 2.8 25.4c-.6.3-1.2.3-1.6 0Z" fill="#ff3a44"/><path d="m17.5 8.9 4.7 2.7c1.1.6 1.1 2.2 0 2.8l-4.7 2.7L13.4 13Z" fill="#ffd500"/></svg>
+              <span><small>Em breve no</small><b>Google Play</b></span>
+            </a>
+            <a class="link-sm" href="brain-house/privacidade.html">Política de privacidade</a>
+          </div>
+        </div>
+        <div class="phone-col">
+          <div class="phone" style="--tilt:-5deg">
+            <div class="screen stroop-screen">
+              <div class="stroop-timer"><i id="st-timer"></i></div>
+              <p class="stroop-q">Toque na <b>cor</b> da palavra,<br>não no que está escrito</p>
+              <div class="stroop-word" id="st-word">AZUL</div>
+              <div class="stroop-btns" id="st-btns">
+                <span style="--c:var(--coral)"></span><span style="--c:var(--blue)"></span>
+                <span style="--c:var(--green)"></span><span style="--c:var(--yellow)"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
     </div>
   </section>
-  <section class="game">
-    <img src="brain-house-icon.png" alt="Ícone do Brain House">
-    <div>
-      <h2>Brain House</h2>
-      <p>Treino de memória e raciocínio: Stroop, sequência, N-back e um desafio novo por dia.</p>
-      <a href="brain-house/privacidade.html">Política de privacidade</a>
+
+  <!-- ESTÚDIO -->
+  <section id="estudio">
+    <div class="wrap studio">
+      <div class="studio-copy reveal">
+        <div class="eyebrow">O estúdio</div>
+        <h2>Uma casa de jogos, peça por peça.</h2>
+        <p>A House Games Studio nasceu em São Paulo. Quem toca o estúdio vem da engenharia: eletrônica, firmware e inteligência artificial. Por isso cada jogo é tratado como produto, medido, testado e ajustado até a curva de dificuldade ficar no ponto.</p>
+        <div class="stats">
+          <div><b style="color:var(--yellow)">2</b><span>jogos lançando</span></div>
+          <div><b style="color:var(--blue)">Godot</b><span>engine dos nossos jogos</span></div>
+          <div><b style="color:var(--green)">100%</b><span>independente</span></div>
+          <div><b style="color:var(--coral)">SP</b><span>São Paulo, Brasil</span></div>
+        </div>
+      </div>
+      <div class="pillars">
+        <div class="pillar reveal" style="--c:var(--yellow)"><div class="ico">01</div><div><h3>Partidas curtas</h3><p>Dá para jogar na fila, no ônibus ou no intervalo. Um minuto já vale uma partida inteira.</p></div></div>
+        <div class="pillar reveal" style="--c:var(--blue)"><div class="ico">02</div><div><h3>Regras em 5 segundos</h3><p>Se precisa de tutorial longo, a ideia volta para a prancheta. A profundidade vem depois.</p></div></div>
+        <div class="pillar reveal" style="--c:var(--green)"><div class="ico">03</div><div><h3>Funciona offline</h3><p>Os jogos rodam sem internet e em celulares mais simples. Ninguém fica de fora.</p></div></div>
+        <div class="pillar reveal" style="--c:var(--coral)"><div class="ico">04</div><div><h3>Ajustado com dados</h3><p>Dificuldade, ritmo e recompensas são calibrados com testes reais, não no achismo.</p></div></div>
+      </div>
     </div>
   </section>
-  <footer>Contato: <a href="mailto:filipepereiranunes@gmail.com">filipepereiranunes@gmail.com</a></footer>
+
+  <!-- CONTATO -->
+  <section id="contato">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div>
+          <div class="eyebrow">Contato</div>
+          <h2>Vamos conversar.</h2>
+        </div>
+        <p>Escolha o assunto e o e-mail já sai com o título certo.</p>
+      </div>
+      <div class="contact-grid reveal">
+        <a class="contact" style="--c:var(--yellow)" href="mailto:filipepereiranunes@gmail.com?subject=%5BSuporte%5D%20">
+          <i class="dot"></i><h3>Suporte aos jogos</h3><p>Bugs, dúvidas, progresso perdido ou compras.</p>
+          <span>Enviar e-mail <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M1 7h11M7.5 2.5 12 7l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </a>
+        <a class="contact" style="--c:var(--blue)" href="mailto:filipepereiranunes@gmail.com?subject=%5BParcerias%5D%20">
+          <i class="dot"></i><h3>Parcerias e publishers</h3><p>Publicação, distribuição, portais web e propostas de negócio.</p>
+          <span>Enviar e-mail <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M1 7h11M7.5 2.5 12 7l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </a>
+        <a class="contact" style="--c:var(--green)" href="mailto:filipepereiranunes@gmail.com?subject=%5BCriadores%5D%20">
+          <i class="dot"></i><h3>Criadores de conteúdo</h3><p>Streamers e youtubers que querem jogar ou divulgar nossos jogos.</p>
+          <span>Enviar e-mail <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M1 7h11M7.5 2.5 12 7l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </a>
+        <a class="contact" style="--c:var(--coral)" href="mailto:filipepereiranunes@gmail.com?subject=%5BImprensa%5D%20">
+          <i class="dot"></i><h3>Imprensa</h3><p>Entrevistas, materiais de divulgação e informações do estúdio.</p>
+          <span>Enviar e-mail <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M1 7h11M7.5 2.5 12 7l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </a>
+      </div>
+    </div>
+  </section>
 </main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <a class="logo" href="#inicio" aria-label="House Games Studio — voltar ao topo">
+        <span class="mark" aria-hidden="true">
+          <i></i><i style="--c:var(--coral)"></i><i></i>
+          <i style="--c:var(--coral)"></i><i style="--c:var(--yellow)"></i><i style="--c:var(--coral)"></i>
+          <i style="--c:var(--blue)"></i><i style="--c:var(--yellow)"></i><i style="--c:var(--green)"></i>
+        </span>
+        <span><b>HOUSE GAMES</b><small>STUDIO</small></span>
+      </a>
+      <p class="copy">© <span id="year">2026</span> House Games Studio · São Paulo, Brasil</p>
+    </div>
+    <div>
+      <h4>Jogos</h4>
+      <ul><li><a href="#jogos">Block Puzzle House</a></li><li><a href="#jogos">Brain House</a></li></ul>
+    </div>
+    <div>
+      <h4>Privacidade</h4>
+      <ul><li><a href="block-puzzle/privacidade.html">Block Puzzle House</a></li><li><a href="brain-house/privacidade.html">Brain House</a></li><li><a href="app-ads.txt">app-ads.txt</a></li></ul>
+    </div>
+    <div>
+      <h4>Contato</h4>
+      <ul><li><a href="mailto:filipepereiranunes@gmail.com">filipepereiranunes@gmail.com</a></li></ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const COLORS = ['#ffc928', '#42a5f5', '#4fd8a8', '#ff6b57', '#f472b6', '#8b5cf6'];
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  /* header + menu */
+  const top = document.getElementById('top');
+  const onScroll = () => top.classList.toggle('scrolled', scrollY > 20);
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  const btn = document.getElementById('menuBtn');
+  btn.addEventListener('click', () => {
+    const open = document.body.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+  });
+  document.querySelectorAll('#nav a').forEach(a => a.addEventListener('click', () => {
+    document.body.classList.remove('open'); btn.setAttribute('aria-expanded', false);
+  }));
+
+  /* reveal on scroll */
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }), { threshold: .12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  /* HERO: blocos caem e montam uma casa em pixel art, depois limpam linha por linha */
+  const cv = document.getElementById('hero-board');
+  const ctx = cv.getContext('2d');
+  const N = 10;
+  const HOUSE = [
+    '....YY....',
+    '...YYYY...',
+    '..CCCCCC..',
+    '.CCCCCCCC.',
+    'CCCCCCCCCC',
+    '.BBBBBBBB.',
+    '.BGGBBYYB.',
+    '.BGGBBYYB.',
+    '.BBBPPBBB.',
+    '.BBBPPBBB.'
+  ];
+  const MAP = { Y: '#ffc928', C: '#ff6b57', B: '#42a5f5', G: '#4fd8a8', P: '#8b5cf6' };
+  let cells = [], size = 0, dpr = 1;
+  function resize() {
+    dpr = Math.min(devicePixelRatio || 1, 2);
+    const r = cv.getBoundingClientRect();
+    cv.width = r.width * dpr; cv.height = r.height * dpr;
+    size = cv.width / N;
+  }
+  function build() {
+    cells = [];
+    const order = [];
+    for (let y = N - 1; y >= 0; y--) for (let x = 0; x < N; x++) {
+      const k = HOUSE[y][x]; if (k !== '.') order.push({ x, y, c: MAP[k] });
+    }
+    order.forEach((o, i) => cells.push({ ...o, t0: i * 38 + Math.random() * 60, a: 1 }));
+  }
+  function roundRect(x, y, w, h, r) {
+    ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath();
+  }
+  function block(px, py, c, a, s = 1) {
+    const g = size * .08, w = (size - g * 2) * s, o = (size - g * 2 - w) / 2;
+    ctx.globalAlpha = a;
+    ctx.fillStyle = c; roundRect(px + g + o, py + g + o, w, w, size * .16); ctx.fill();
+    ctx.fillStyle = 'rgba(0,0,0,.22)'; roundRect(px + g + o, py + g + o + w * .78, w, w * .22, size * .1); ctx.fill();
+    ctx.fillStyle = 'rgba(255,255,255,.35)'; roundRect(px + g + o + w * .18, py + g + o + w * .12, w * .38, w * .1, 3); ctx.fill();
+    ctx.globalAlpha = 1;
+  }
+  let start = performance.now(), phase = 'build';
+  const FALL = 520;
+  function frame(now) {
+    const t = now - start;
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
+      ctx.fillStyle = 'rgba(255,255,255,.045)';
+      const g = size * .08; roundRect(x * size + g, y * size + g, size - g * 2, size - g * 2, size * .16); ctx.fill();
+    }
+    const last = cells.length ? cells[cells.length - 1].t0 + FALL : 0;
+    if (phase === 'build') {
+      for (const c of cells) {
+        const k = Math.min(1, Math.max(0, (t - c.t0) / FALL));
+        if (k <= 0) continue;
+        const e = 1 - Math.pow(1 - k, 3);
+        const fromY = -2 * size;
+        block(c.x * size, fromY + (c.y * size - fromY) * e, c.c, Math.min(1, k * 3));
+      }
+      if (t > last + 1800) { phase = 'clear'; start = now; }
+    } else {
+      for (const c of cells) {
+        const d = (N - 1 - c.y) * 90;
+        const k = Math.min(1, Math.max(0, (t - d) / 380));
+        const col = k > 0 && k < .35 ? '#ffffff' : c.c;
+        if (k < 1) block(c.x * size, c.y * size, col, 1 - k, 1 - k * .5);
+      }
+      if (t > N * 90 + 700) { phase = 'build'; build(); start = now; }
+    }
+    if (!reduce) requestAnimationFrame(frame);
+  }
+  resize(); build();
+  addEventListener('resize', resize);
+  if (reduce) { start = performance.now() - 99999; frame(performance.now()); }
+  else requestAnimationFrame(frame);
+
+  /* Block Puzzle: tabuleiro que enche uma linha e limpa */
+  const bb = document.getElementById('bp-board');
+  const score = document.getElementById('bp-score');
+  const cellsBP = [];
+  for (let i = 0; i < 64; i++) { const el = document.createElement('i'); bb.appendChild(el); cellsBP.push(el); }
+  const seed = [0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0, 0,0,0,1,0,0,0,0, 0,0,1,1,0,0,2,0, 3,0,1,0,0,2,2,0, 3,3,0,0,4,4,2,0, 3,1,1,0,4,4,0,2, 0,1,1,2,2,0,3,3];
+  function paintSeed() {
+    seed.forEach((v, i) => {
+      const el = cellsBP[i]; el.className = '';
+      if (v) { el.classList.add('on'); el.style.setProperty('--c', COLORS[v - 1]); }
+    });
+  }
+  paintSeed();
+  let pts = 1240;
+  function fillRow() {
+    const row = 6, gaps = [];
+    for (let x = 0; x < 8; x++) if (!cellsBP[row * 8 + x].classList.contains('on')) gaps.push(x);
+    let i = 0;
+    const step = setInterval(() => {
+      if (i < gaps.length) {
+        const el = cellsBP[row * 8 + gaps[i]];
+        el.classList.add('on'); el.style.setProperty('--c', COLORS[5]); i++;
+      } else {
+        clearInterval(step);
+        for (let x = 0; x < 8; x++) cellsBP[row * 8 + x].classList.add('flash');
+        setTimeout(() => {
+          for (let x = 0; x < 8; x++) { const el = cellsBP[row * 8 + x]; el.className = ''; }
+          pts += 160; score.textContent = pts.toLocaleString('pt-BR').replace('.', ' ');
+          setTimeout(() => { paintSeed(); if (pts > 3000) pts = 1240; }, 1400);
+        }, 260);
+      }
+    }, 220);
+  }
+  if (!reduce) setInterval(fillRow, 4200);
+
+  /* Brain House: Stroop */
+  const words = [['AZUL', 1], ['VERDE', 2], ['AMARELO', 3], ['VERMELHO', 0]];
+  const word = document.getElementById('st-word');
+  const btns = [...document.querySelectorAll('#st-btns span')];
+  const timer = document.getElementById('st-timer');
+  const ink = ['#ff6b57', '#42a5f5', '#4fd8a8', '#ffc928'];
+  let wi = 0;
+  function nextStroop() {
+    const [w, meaning] = words[wi++ % words.length];
+    let c; do { c = Math.floor(Math.random() * 4); } while (c === meaning);
+    word.textContent = w; word.style.setProperty('--n', Math.max(w.length, 5)); word.style.fontSize = ''; word.style.color = ink[c];
+    const room = word.parentElement.clientWidth - 32;
+    if (word.scrollWidth > room) word.style.fontSize = (parseFloat(getComputedStyle(word).fontSize) * room / word.scrollWidth * .96) + 'px';
+    timer.animate([{ transform: 'scaleX(1)' }, { transform: 'scaleX(0)' }], { duration: 1900, easing: 'linear' });
+    setTimeout(() => { btns[c].classList.add('hit'); setTimeout(() => btns[c].classList.remove('hit'), 300); }, 1300);
+  }
+  nextStroop();
+  if (!reduce) setInterval(nextStroop, 2000);
+})();
+</script>
 </body>
 </html>
