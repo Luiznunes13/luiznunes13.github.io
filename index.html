@@ -3,18 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>House Games Studio</title>
-<meta name="description" content="House Games Studio: estúdio independente de São Paulo que cria jogos casuais de puzzle e raciocínio para Android.">
-<meta name="theme-color" content="#0b0f22">
-<meta property="og:title" content="House Games Studio">
-<meta property="og:description" content="Jogos pequenos que cabem no seu dia. Puzzle e raciocínio para Android, feitos em São Paulo.">
-<meta property="og:image" content="https://housegamestudio.duckdns.org/block-puzzle-icon.png">
-<meta property="og:url" content="https://housegamestudio.duckdns.org/">
+<title>Red Nose Game House</title>
+<meta name="description" content="Red Nose Game House: estúdio independente de São Paulo que cria jogos casuais de puzzle e raciocínio para Android, com uma turma de personagens que vive na nossa casa de jogos.">
+<meta name="theme-color" content="#ece4d0">
+<meta property="og:title" content="Red Nose Game House">
+<meta property="og:description" content="Entre no salão: puzzles e desafios de raciocínio para Android, feitos em São Paulo.">
+<meta property="og:image" content="https://rednosegamehouse.duckdns.org/assets/rnh/fachada_16x9.webp">
+<meta property="og:url" content="https://rednosegamehouse.duckdns.org/">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="House Games Studio">
-<meta name="twitter:description" content="Jogos pequenos que cabem no seu dia. Puzzle e raciocínio para Android, feitos em São Paulo.">
-<meta name="twitter:image" content="https://housegamestudio.duckdns.org/block-puzzle-icon.png">
+<meta name="twitter:title" content="Red Nose Game House">
+<meta name="twitter:description" content="Entre no salão: puzzles e desafios de raciocínio para Android, feitos em São Paulo.">
+<meta name="twitter:image" content="https://rednosegamehouse.duckdns.org/assets/rnh/fachada_16x9.webp">
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-HOUSEGAMES"></script>
 <script>
@@ -23,95 +23,113 @@
   gtag('js', new Date());
   gtag('config', 'G-HOUSEGAMES');
 </script>
-<link rel="icon" href="block-puzzle-icon.png">
+<link rel="icon" href="assets/rnh/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Fredoka:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Libre+Franklin:wght@400;500;600;700&display=swap">
 <style>
-/* Layout: cabeçalho fixo · hero em tela cheia com tabuleiro animado · vitrine de jogos com celulares ·
-   em produção · estúdio · contatos por assunto · rodapé. Fundo escuro com grade e brilhos nas cores dos blocos. */
+/* Red Nose Game House — casa de jogos em papel de jornal antigo: papel envelhecido com
+   retícula, tinta de nanquim, quadros de gibi com sombra chapada e balões de fala.
+   Mesmas cores e fontes do Cruzadinhas House (jogo). */
 :root {
-  --bg: #0b0f22;
-  --bg-2: #11173a;
-  --surface: rgba(255,255,255,.04);
-  --surface-2: rgba(255,255,255,.07);
-  --line: rgba(255,255,255,.09);
-  --line-2: rgba(255,255,255,.16);
-  --fg: #f3f1e8;
-  --muted: #a3a9c9;
-  --yellow: #ffc928;
-  --blue: #42a5f5;
-  --green: #4fd8a8;
-  --coral: #ff6b57;
-  --pink: #f472b6;
-  --purple: #8b5cf6;
-  --display: "Unbounded", "Arial Black", system-ui, sans-serif;
-  --body: "Fredoka", "Trebuchet MS", system-ui, sans-serif;
+  --paper: #ece4d0;
+  --paper-2: #f6f1e4;
+  --paper-3: #e0d5b9;
+  --bubble: #fbf7ec;
+  --ink: #332c22;
+  --ink-2: #5c5243;
+  --muted: #74684f;
+  --green: #3f9d64;
+  --gold: #c98f1e;
+  --red: #b8513f;
+  --blue: #3d6f9e;
+  --coin: #8a5a12;
+  --display: "Playfair Display", Georgia, "Times New Roman", serif;
+  --body: "Libre Franklin", "Helvetica Neue", Arial, system-ui, sans-serif;
   --gutter: max(16px, env(safe-area-inset-left, 0px));
   --max: 1200px;
-  color-scheme: dark;
+  --stroke: 3px;
+  color-scheme: light;
 }
-:root:not([data-theme="light"]) { color-scheme: dark; }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #0b0f22; } }
-:root[data-theme="dark"] { --bg: #0b0f22; }
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body {
   margin: 0;
-  background: var(--bg);
-  color: var(--fg);
-  font: 400 1.05rem/1.6 var(--body);
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 1.04rem/1.65 var(--body);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
-/* grade de fundo + brilhos */
+/* retícula de jornal + manchas de papel velho */
 body::before {
   content: ""; position: fixed; inset: 0; z-index: -2; pointer-events: none;
-  background-image:
-    linear-gradient(var(--line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line) 1px, transparent 1px);
-  background-size: 64px 64px;
-  mask-image: radial-gradient(ellipse 90% 80% at 50% 30%, #000 40%, transparent 100%);
+  background-image: radial-gradient(rgba(51,44,34,.07) 1px, transparent 1.5px);
+  background-size: 7px 7px;
 }
 body::after {
   content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
   background:
-    radial-gradient(40vmax 40vmax at -5% -10%, rgba(255,107,87,.28), transparent 60%),
-    radial-gradient(45vmax 45vmax at 105% 95%, rgba(66,90,245,.38), transparent 60%),
-    radial-gradient(30vmax 30vmax at 100% 0%, rgba(139,92,246,.18), transparent 60%);
+    radial-gradient(60vmax 50vmax at 0% 0%, rgba(160,130,80,.18), transparent 60%),
+    radial-gradient(50vmax 40vmax at 100% 100%, rgba(140,110,60,.2), transparent 60%);
 }
 a { color: inherit; }
-img { max-width: 100%; display: block; }
+/* height:auto: com width/height no HTML (evita pulo no carregamento), a altura
+   acompanha a largura do CSS em vez de ficar presa e esticar a figura */
+img { max-width: 100%; height: auto; display: block; }
 .wrap { width: 100%; max-width: var(--max); margin: 0 auto; padding-inline: var(--gutter); }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 
-/* ---------- header ---------- */
-.top {
-  position: fixed; inset: 0 0 auto 0; z-index: 50;
-  transition: background .3s, border-color .3s;
-  border-bottom: 1px solid transparent;
+/* ---------- peças de gibi ---------- */
+.panel {
+  background: var(--paper-2);
+  border: var(--stroke) solid var(--ink);
+  border-radius: 18px;
+  box-shadow: 6px 6px 0 var(--ink);
 }
-.top.scrolled { background: rgba(11,15,34,.78); backdrop-filter: blur(14px); border-color: var(--line); }
+.bubble {
+  position: relative; display: inline-block;
+  background: var(--bubble); color: var(--ink);
+  border: var(--stroke) solid var(--ink); border-radius: 20px;
+  padding: .55rem 1rem; font: 700 .98rem/1.3 var(--body);
+  max-width: 17rem;
+}
+/* rabinho do balão: quadrado girado com só duas bordas */
+.bubble::after {
+  content: ""; position: absolute; width: 16px; height: 16px;
+  background: var(--bubble); border: var(--stroke) solid var(--ink);
+  border-top: 0; border-left: 0;
+}
+.bubble.down::after { bottom: -10px; left: var(--tail, 30%); transform: rotate(45deg); }
+.bubble.left::after { left: -10px; top: var(--tail, 40%); transform: rotate(135deg); }
+.bubble.right::after { right: -10px; top: var(--tail, 40%); transform: rotate(-45deg); }
+
+.eyebrow { font: 700 .78rem/1 var(--body); letter-spacing: .24em; text-transform: uppercase; color: var(--red); }
+.rule { border: 0; height: 7px; margin: 0; border-top: 3px solid var(--ink); border-bottom: 1.5px solid var(--ink); }
+
+/* ---------- header ---------- */
+.top { position: fixed; inset: 0 0 auto 0; z-index: 50; transition: background .3s, box-shadow .3s; }
+.top.scrolled { background: rgba(236,228,208,.94); backdrop-filter: blur(10px); box-shadow: 0 3px 0 var(--ink), 0 6px 0 -3px var(--ink); }
 .top .wrap { display: flex; align-items: center; justify-content: space-between; height: 76px; }
 .logo { display: flex; align-items: center; gap: .7rem; text-decoration: none; }
-.mark { display: grid; grid-template-columns: repeat(3, 9px); gap: 2px; }
-.mark i { width: 9px; height: 9px; border-radius: 2px; background: var(--c, transparent); }
-.logo b { font: 800 .95rem/1 var(--display); letter-spacing: .02em; }
-.logo small { display: block; font: 500 .62rem/1 var(--display); letter-spacing: .32em; color: var(--muted); margin-top: .3rem; }
-.nav { display: flex; gap: 2rem; align-items: center; }
-.nav a { text-decoration: none; color: var(--muted); font-weight: 500; transition: color .2s; }
-.nav a:hover { color: var(--fg); }
+.logo img { width: 46px; height: 46px; border-radius: 50%; border: 2.5px solid var(--ink); background: var(--paper-2); object-fit: cover; }
+.logo b { display: block; font: 900 1.15rem/1 var(--display); letter-spacing: .02em; }
+.logo small { display: block; font: 700 .62rem/1 var(--body); letter-spacing: .34em; color: var(--muted); margin-top: .3rem; }
+.nav { display: flex; gap: 1.8rem; align-items: center; }
+.nav a { text-decoration: none; color: var(--ink-2); font-weight: 600; transition: color .2s; }
+.nav a:hover { color: var(--red); }
 .nav .pill {
-  color: var(--bg); background: var(--yellow); padding: .55rem 1.1rem; border-radius: 999px; font-weight: 600;
+  color: var(--paper-2); background: var(--red); padding: .55rem 1.1rem; border-radius: 999px;
+  border: 2.5px solid var(--ink); box-shadow: 3px 3px 0 var(--ink);
 }
-.nav .pill:hover { color: var(--bg); filter: brightness(1.08); }
+.nav .pill:hover { color: var(--paper-2); transform: translate(-1px,-1px); box-shadow: 4px 4px 0 var(--ink); }
 .menu-btn {
-  display: none; width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--line-2);
-  background: transparent; color: var(--fg); cursor: pointer; place-items: center;
+  display: none; width: 46px; height: 46px; border-radius: 50%; border: 2.5px solid var(--ink);
+  background: var(--paper-2); color: var(--ink); cursor: pointer; place-items: center;
 }
 .menu-btn span, .menu-btn span::before, .menu-btn span::after {
-  display: block; width: 18px; height: 2px; background: currentColor; border-radius: 2px; position: relative; content: "";
+  display: block; width: 18px; height: 2.5px; background: currentColor; border-radius: 2px; position: relative; content: "";
   transition: transform .25s, opacity .25s;
 }
 .menu-btn span::before { position: absolute; top: -6px; }
@@ -121,197 +139,256 @@ img { max-width: 100%; display: block; }
 .open .menu-btn span::after { transform: translateY(-6px) rotate(-45deg); }
 
 /* ---------- hero ---------- */
-.hero { min-height: 100svh; display: flex; align-items: center; padding-top: 96px; padding-bottom: 72px; position: relative; }
-.hero .wrap { display: grid; grid-template-columns: 1.15fr .85fr; gap: 3rem; align-items: center; }
-.eyebrow { font: 500 .78rem/1 var(--display); letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
-.eyebrow::after { content: ""; display: block; width: 40px; height: 2px; background: var(--fg); margin-top: .9rem; }
+.hero { min-height: 100svh; display: flex; align-items: center; padding-top: 104px; padding-bottom: 64px; }
+.hero .wrap { display: grid; grid-template-columns: .95fr 1.05fr; gap: 3rem; align-items: center; }
 h1 {
-  font: 800 clamp(2.4rem, 6.4vw, 5rem)/1.04 var(--display);
-  letter-spacing: -.01em; margin: 1.6rem 0 1.4rem;
+  font: 900 clamp(2.6rem, 6.6vw, 5.4rem)/.98 var(--display);
+  letter-spacing: -.01em; margin: 1.2rem 0 1.2rem;
 }
-h1 em { font-style: normal; color: var(--yellow); }
-.hero p.lead { font-size: clamp(1.05rem, 1.6vw, 1.25rem); color: var(--muted); max-width: 34rem; margin: 0 0 2.2rem; }
-.ctas { display: flex; gap: .8rem; flex-wrap: wrap; }
+h1 span { display: block; }
+h1 em { font-style: normal; color: var(--red); }
+.hero p.lead { font-size: clamp(1.05rem, 1.6vw, 1.22rem); color: var(--ink-2); max-width: 32rem; margin: 0 0 2rem; }
+.ctas { display: flex; gap: .9rem; flex-wrap: wrap; }
 .btn {
-  display: inline-flex; align-items: center; gap: .55rem; text-decoration: none; font-weight: 600;
-  padding: .9rem 1.5rem; border-radius: 999px; border: 1px solid var(--line-2); transition: transform .2s, background .2s;
+  display: inline-flex; align-items: center; gap: .55rem; text-decoration: none; font-weight: 700;
+  padding: .85rem 1.4rem; border-radius: 999px; border: 2.5px solid var(--ink);
+  background: var(--paper-2); box-shadow: 4px 4px 0 var(--ink); transition: transform .15s, box-shadow .15s;
 }
-.btn:hover { transform: translateY(-2px); background: var(--surface-2); }
-.btn.primary { background: var(--fg); color: var(--bg); border-color: var(--fg); }
-.btn.primary:hover { background: #fff; }
-.board-wrap { position: relative; justify-self: center; width: min(100%, 440px); aspect-ratio: 1; }
-.board-wrap::before {
-  content: ""; position: absolute; inset: 8%; border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,201,40,.35), transparent 70%); filter: blur(30px);
-}
-#hero-board { position: relative; width: 100%; height: 100%; }
-.scroll-hint {
-  position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%);
-  display: flex; flex-direction: column; align-items: center; gap: .4rem;
-  font-size: .78rem; color: var(--muted); text-decoration: none; letter-spacing: .08em;
-}
-.scroll-hint svg { animation: bob 2s ease-in-out infinite; }
-@keyframes bob { 50% { transform: translateY(6px); } }
+.btn:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--ink); }
+.btn:active { transform: translate(2px,2px); box-shadow: 1px 1px 0 var(--ink); }
+.btn.primary { background: var(--green); color: #fff; }
+.facade { position: relative; }
+.facade picture img { width: 100%; height: auto; border-radius: 14px; }
+.facade .frame { padding: 10px; transform: rotate(1deg); }
+.facade .host { position: absolute; right: -2%; bottom: -8%; width: 34%; filter: drop-shadow(4px 4px 0 rgba(51,44,34,.35)); }
+.facade .bubble { position: absolute; right: 30%; bottom: 30%; }
 
 /* ---------- sections ---------- */
-section { padding-block: clamp(4rem, 10vw, 8rem); }
-.sec-head { display: flex; justify-content: space-between; align-items: end; gap: 2rem; margin-bottom: 3rem; flex-wrap: wrap; }
-h2 { font: 700 clamp(1.9rem, 4.4vw, 3.2rem)/1.1 var(--display); margin: 1.2rem 0 0; }
-.sec-head p { color: var(--muted); max-width: 26rem; margin: 0; }
+section { padding-block: clamp(4rem, 9vw, 7rem); }
+.sec-head { display: flex; justify-content: space-between; align-items: end; gap: 2rem; margin-bottom: 2.8rem; flex-wrap: wrap; }
+h2 { font: 900 clamp(2rem, 4.6vw, 3.4rem)/1.05 var(--display); margin: 1rem 0 0; }
+.sec-head p { color: var(--ink-2); max-width: 26rem; margin: 0; }
+.masthead { text-align: center; margin-bottom: 2.6rem; }
+.masthead .rule { max-width: 560px; margin: 0 auto; }
+.masthead h2 { margin: .7rem 0; }
 
-/* game showcase */
+/* ---------- jogos (máquinas do salão) ---------- */
 .game {
-  position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center;
-  border: 1px solid var(--line-2); border-radius: 32px; padding: clamp(1.5rem, 4vw, 3.5rem);
-  background: linear-gradient(140deg, var(--surface-2), rgba(255,255,255,.015));
-  overflow: hidden; margin-bottom: 1.5rem;
+  position: relative; display: grid; grid-template-columns: 1.1fr .9fr; gap: 2rem; align-items: center;
+  padding: clamp(1.5rem, 4vw, 3rem); margin-bottom: 2.4rem;
 }
-.game::before {
-  content: ""; position: absolute; width: 60%; aspect-ratio: 1; right: -15%; top: -30%; border-radius: 50%;
-  background: radial-gradient(circle, var(--glow), transparent 65%); opacity: .35; pointer-events: none;
-}
-.game.alt { grid-template-columns: 1fr 1fr; }
 .game.alt .phone-col { order: -1; }
 .game-info { position: relative; }
-.game-id { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.4rem; }
-.game-id img { width: 76px; height: 76px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,.4); }
+.game-id { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.2rem; }
+.game-id img { width: 76px; height: 76px; border-radius: 20px; border: 2.5px solid var(--ink); }
 .tag {
-  display: inline-block; font: 500 .7rem/1 var(--display); letter-spacing: .14em; text-transform: uppercase;
-  padding: .45rem .7rem; border-radius: 999px; border: 1px solid var(--line-2); color: var(--muted);
+  display: inline-block; font: 700 .7rem/1 var(--body); letter-spacing: .14em; text-transform: uppercase;
+  padding: .42rem .7rem; border-radius: 999px; border: 2px solid var(--ink); color: var(--ink); background: var(--paper);
 }
-.game h3 { font: 800 clamp(1.6rem, 3.4vw, 2.5rem)/1.05 var(--display); margin: .5rem 0 0; }
-.game p { color: var(--muted); margin: 0 0 1.4rem; max-width: 30rem; }
-.chips { display: flex; flex-wrap: wrap; gap: .5rem; margin: 0 0 1.8rem; padding: 0; list-style: none; }
-.chips li { background: var(--surface-2); border-radius: 999px; padding: .35rem .85rem; font-size: .92rem; }
-.store-row { display: flex; gap: .8rem; flex-wrap: wrap; align-items: center; }
+.game h3 { font: 900 clamp(1.7rem, 3.4vw, 2.5rem)/1.05 var(--display); margin: .45rem 0 0; }
+.game p { color: var(--ink-2); margin: 0 0 1.3rem; max-width: 30rem; }
+.chips { display: flex; flex-wrap: wrap; gap: .5rem; margin: 0 0 1.6rem; padding: 0; list-style: none; }
+.chips li { background: var(--paper-3); border-radius: 999px; padding: .32rem .85rem; font-size: .92rem; font-weight: 500; }
+.store-row { display: flex; gap: .9rem; flex-wrap: wrap; align-items: center; }
 .store {
   display: inline-flex; align-items: center; gap: .7rem; padding: .6rem 1.1rem .6rem .9rem;
-  border-radius: 14px; background: #000; border: 1px solid var(--line-2); text-decoration: none; color: #fff;
+  border-radius: 14px; background: #1d1913; border: 2.5px solid var(--ink); text-decoration: none; color: #fff;
+  box-shadow: 3px 3px 0 var(--ink);
 }
 .store small { display: block; font-size: .66rem; letter-spacing: .06em; text-transform: uppercase; opacity: .7; line-height: 1.1; }
 .store b { font-weight: 600; font-size: 1.05rem; line-height: 1.1; }
-.store[aria-disabled="true"] { opacity: .75; cursor: default; }
-.link-sm { color: var(--muted); font-size: .92rem; }
-.link-sm:hover { color: var(--fg); }
+.link-sm { color: var(--ink-2); font-size: .92rem; }
+.link-sm:hover { color: var(--red); }
+/* personagem dono do jogo, no canto do quadro */
+.owner { position: absolute; display: flex; align-items: flex-end; gap: .4rem; z-index: 2; }
+.owner img { width: 104px; height: 104px; border-radius: 50%; }
+.game .owner { right: -14px; top: -38px; }
+.game.alt .owner { left: -14px; right: auto; flex-direction: row-reverse; }
 
-/* phone mockup */
+/* celular com o jogo rodando */
 .phone-col { display: flex; justify-content: center; position: relative; }
 .phone {
-  width: 250px; aspect-ratio: 9/19; border-radius: 40px; padding: 10px;
-  background: linear-gradient(160deg, #3a3f5c, #15182b); box-shadow: 0 30px 80px rgba(0,0,0,.55), inset 0 0 0 1px rgba(255,255,255,.12);
+  width: 240px; aspect-ratio: 9/19; border-radius: 38px; padding: 9px;
+  background: #2b251c; border: var(--stroke) solid var(--ink); box-shadow: 6px 6px 0 rgba(51,44,34,.35);
   transform: rotate(var(--tilt, -4deg)); transition: transform .5s;
 }
 .game:hover .phone { transform: rotate(0deg) translateY(-6px); }
 .screen {
-  width: 100%; height: 100%; border-radius: 31px; overflow: hidden; position: relative;
-  background: #1d2340; display: flex; flex-direction: column; align-items: center; padding: 34px 16px 18px;
+  width: 100%; height: 100%; border-radius: 30px; overflow: hidden; position: relative;
+  background: var(--paper); display: flex; flex-direction: column; align-items: center; padding: 34px 14px 18px;
+  container-type: inline-size;
 }
-.screen::before { content: ""; position: absolute; top: 10px; left: 50%; width: 70px; height: 18px; border-radius: 10px; background: #000; transform: translateX(-50%); }
-.hud { width: 100%; display: flex; justify-content: space-between; font: 600 .78rem/1 var(--body); color: #c9cdea; margin: 6px 0 14px; }
-.hud b { font: 800 1.35rem/1 var(--display); color: #fff; display: block; margin-top: .25rem; }
-.mini-board { display: grid; grid-template-columns: repeat(8, 1fr); gap: 3px; width: 100%; padding: 6px; background: #151a36; border-radius: 12px; }
-.mini-board i { aspect-ratio: 1; border-radius: 4px; background: #262d57; transition: background .25s, transform .25s; }
-.mini-board i.on { background: var(--c); box-shadow: inset 0 -3px 0 rgba(0,0,0,.22), inset 0 3px 0 rgba(255,255,255,.25); }
+.screen::before { content: ""; position: absolute; top: 10px; left: 50%; width: 64px; height: 16px; border-radius: 10px; background: #1d1913; transform: translateX(-50%); }
+.hud { width: 100%; display: flex; justify-content: space-between; font: 700 .72rem/1 var(--body); color: var(--ink-2); margin: 6px 0 14px; letter-spacing: .06em; }
+.hud b { font: 900 1.35rem/1 var(--display); color: var(--ink); display: block; margin-top: .25rem; }
+.mini-board { display: grid; grid-template-columns: repeat(8, 1fr); gap: 3px; width: 100%; padding: 6px; background: var(--ink); border-radius: 10px; }
+.mini-board i { aspect-ratio: 1; border-radius: 3px; background: var(--paper-3); transition: background .25s, transform .25s; }
+.mini-board i.on { background: var(--c); box-shadow: inset 0 -3px 0 rgba(0,0,0,.2), inset 0 3px 0 rgba(255,255,255,.25); }
 .mini-board i.flash { background: #fff; transform: scale(.85); }
 .tray { display: flex; gap: 14px; justify-content: center; margin-top: auto; padding-top: 14px; }
 .piece { display: grid; gap: 2px; }
 .piece i { width: 14px; height: 14px; border-radius: 3px; background: var(--c); }
 .piece i.x { background: transparent; }
-
-.screen { container-type: inline-size; }
-.stroop-screen { background: linear-gradient(180deg, #2b2160, #1a1640); }
-.stroop-timer { width: 100%; height: 6px; border-radius: 6px; background: rgba(255,255,255,.12); overflow: hidden; margin-bottom: 1.4rem; }
+.stroop-timer { width: 100%; height: 6px; border-radius: 6px; background: var(--paper-3); overflow: hidden; margin-bottom: 1.4rem; }
 .stroop-timer i { display: block; height: 100%; width: 100%; background: var(--green); transform-origin: left; }
-.stroop-q { font-size: .8rem; color: #c9c4ef; text-align: center; margin: 0 0 1rem; }
-.stroop-word { font: 800 min(2.4rem, calc(100cqi / var(--n, 6)))/1 var(--display); white-space: nowrap; max-width: 100%; margin: .6rem 0 auto; transition: color .2s, transform .2s; }
+.stroop-q { font-size: .78rem; color: var(--ink-2); text-align: center; margin: 0 0 1rem; }
+.stroop-word { font: 900 min(2.3rem, calc(100cqi / var(--n, 6)))/1 var(--display); white-space: nowrap; max-width: 100%; margin: .6rem 0 auto; transition: color .2s; }
 .stroop-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; width: 100%; margin-top: 1.2rem; }
-.stroop-btns span { height: 46px; border-radius: 12px; background: var(--c); box-shadow: inset 0 -4px 0 rgba(0,0,0,.25); transition: transform .15s; }
-.stroop-btns span.hit { transform: scale(.92); outline: 3px solid #fff; }
+.stroop-btns span { height: 46px; border-radius: 12px; background: var(--c); border: 2px solid var(--ink); box-shadow: inset 0 -4px 0 rgba(0,0,0,.2); transition: transform .15s; }
+.stroop-btns span.hit { transform: scale(.92); outline: 3px solid var(--ink); }
 
-/* em produção */
-.wip-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+/* ---------- em produção (oficina) ---------- */
 .wip {
-  border: 1px dashed var(--line-2); border-radius: 26px; padding: 2rem; background: var(--surface);
-  position: relative; overflow: hidden; min-height: 260px; display: flex; flex-direction: column;
+  position: relative; overflow: hidden; display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: end;
+  padding: clamp(1.5rem, 4vw, 2.6rem);
 }
-.wip .art { height: 90px; margin-bottom: 1.4rem; display: flex; align-items: end; gap: 4px; }
-.wip .art.crossword { display: grid; grid-template-columns: repeat(5, 1fr); grid-auto-rows: 1fr; gap: 3px; height: 90px; width: min(100%, 230px); }
-.wip .art.crossword i { display: grid; place-items: center; border-radius: 6px; background: var(--surface-2); color: var(--fg); font: 700 .85rem/1 var(--display); }
-.wip .art.crossword i.blk { background: rgba(0,0,0,.4); }
-.wip .tag { align-self: flex-start; }
-.wip h3 { font: 700 1.4rem/1.15 var(--display); margin: .8rem 0 .5rem; }
-.wip p { color: var(--muted); margin: 0; }
-.wip .progress { margin-top: auto; padding-top: 1.4rem; }
-.bar { height: 6px; border-radius: 6px; background: var(--surface-2); overflow: hidden; }
-.bar i { display: block; height: 100%; border-radius: 6px; background: var(--c); width: var(--w); }
-.progress small { display: flex; justify-content: space-between; color: var(--muted); font-size: .85rem; margin-bottom: .45rem; }
+/* oficina no fundo, apagada do lado do texto pra não atrapalhar a leitura */
+.wip::before {
+  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    linear-gradient(90deg, var(--paper-2) 40%, rgba(246,241,228,.55) 75%, rgba(246,241,228,.35)),
+    url("assets/rnh/oficina.webp") center 40%/cover;
+}
+.wip > * { position: relative; z-index: 1; }
+.wip .art.crossword { display: grid; grid-template-columns: repeat(5, 1fr); grid-auto-rows: 1fr; gap: 3px; height: 90px; width: min(100%, 230px); margin-bottom: 1.3rem; background: var(--ink); padding: 3px; border-radius: 8px; }
+.wip .art.crossword i { display: grid; place-items: center; border-radius: 3px; background: var(--bubble); color: var(--ink); font: 900 .9rem/1 var(--display); }
+.wip .art.crossword i.blk { background: var(--ink); }
+.wip h3 { font: 900 1.8rem/1.1 var(--display); margin: .8rem 0 .5rem; }
+.wip p { color: var(--ink-2); margin: 0; max-width: 32rem; }
+.wip .progress { margin-top: 1.4rem; max-width: 32rem; }
+.bar { height: 14px; border-radius: 8px; background: var(--paper-3); border: 2px solid var(--ink); overflow: hidden; }
+.bar i { display: block; height: 100%; background: repeating-linear-gradient(-45deg, var(--gold) 0 10px, #b47c12 10px 20px); width: var(--w); }
+.progress small { display: flex; justify-content: space-between; color: var(--ink-2); font-size: .88rem; font-weight: 600; margin-bottom: .45rem; }
+.wip .crew { display: flex; align-items: flex-end; gap: 1.2rem; }
+.wip .crew .who { display: flex; flex-direction: column; align-items: center; gap: .9rem; }
+.wip .crew img { width: 150px; }
+.wip .crew .mec { width: 170px; }
 
-/* estúdio */
-.studio { display: grid; grid-template-columns: .9fr 1.1fr; gap: 3rem; align-items: start; }
-.studio-copy p { color: var(--muted); font-size: 1.12rem; }
-.stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line-2); border: 1px solid var(--line-2); border-radius: 24px; overflow: hidden; margin-top: 2rem; }
-.stats div { background: var(--bg-2); padding: 1.4rem 1.5rem; }
-.stats b { display: block; font: 800 2rem/1 var(--display); }
-.stats span { color: var(--muted); font-size: .92rem; }
+/* ---------- personagens (página de jornal) ---------- */
+.cast-page { padding: clamp(1.4rem, 3vw, 2.4rem); }
+.cast-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.4rem; }
+.cutout {
+  position: relative; background: var(--bubble); border: 2px dashed var(--ink-2); border-radius: 6px;
+  padding: 1rem 1rem 1.1rem; display: flex; flex-direction: column; align-items: center; text-align: center;
+  transform: rotate(var(--r, 0deg)); transition: transform .2s;
+}
+.cutout:hover { transform: rotate(0deg) translateY(-4px); }
+.cutout .fig { height: 170px; width: 100%; display: grid; place-items: center; margin-bottom: .6rem; }
+.cutout .fig img { max-height: 170px; width: auto; }
+.cutout .fig img.round { width: 150px; height: 150px; }
+.cutout h3 { font: 900 1.25rem/1.1 var(--display); margin: 0; }
+.cutout .role { font-size: .82rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .08em; margin: .3rem 0 .6rem; }
+.cutout q { font: italic 600 .98rem/1.3 var(--display); color: var(--ink); quotes: "“" "”"; flex: 1; }
+.cutout button {
+  margin-top: .9rem; font: 700 .85rem/1 var(--body); color: var(--ink); background: var(--paper);
+  border: 2px solid var(--ink); border-radius: 999px; padding: .5rem .9rem; cursor: pointer; box-shadow: 2px 2px 0 var(--ink);
+}
+.cutout button:hover { background: var(--gold); color: #fff; }
+dialog.strip {
+  width: min(96vw, 1200px); padding: 0; border: var(--stroke) solid var(--ink); border-radius: 14px;
+  background: var(--paper-2); box-shadow: 8px 8px 0 var(--ink);
+}
+dialog.strip::backdrop { background: rgba(29,25,19,.75); }
+dialog.strip img { width: 100%; height: auto; }
+dialog.strip .close {
+  position: absolute; top: 10px; right: 10px; width: 44px; height: 44px; border-radius: 50%;
+  border: 2.5px solid var(--ink); background: var(--bubble); font: 900 1.3rem/1 var(--body); cursor: pointer;
+}
+
+/* ---------- estúdio (a casa) ---------- */
+.studio { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+.studio-copy p { color: var(--ink-2); font-size: 1.1rem; }
+.studio .photo { padding: 8px; transform: rotate(-1deg); position: relative; margin-bottom: 2rem; }
+.studio .photo img { border-radius: 10px; }
+.studio .photo .owner { right: -12px; bottom: -30px; }
+.studio .photo .owner img { width: 120px; height: auto; border-radius: 0; }
+.stats { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-top: 2rem; overflow: hidden; }
+.stats div { padding: 1.2rem 1.4rem; border-right: 2px solid var(--ink); border-bottom: 2px solid var(--ink); }
+.stats div:nth-child(2n) { border-right: 0; }
+.stats div:nth-child(n+3) { border-bottom: 0; }
+.stats b { display: block; font: 900 2rem/1 var(--display); }
+.stats span { color: var(--ink-2); font-size: .92rem; }
 .pillars { display: grid; gap: 1rem; }
-.pillar { display: grid; grid-template-columns: 56px 1fr; gap: 1.2rem; padding: 1.6rem; border-radius: 22px; border: 1px solid var(--line); background: var(--surface); transition: border-color .25s, transform .25s; }
-.pillar:hover { border-color: var(--line-2); transform: translateX(4px); }
-.pillar .ico { width: 56px; height: 56px; border-radius: 16px; display: grid; place-items: center; background: var(--c); color: #111; font: 800 1.2rem var(--display); }
-.pillar h3 { font: 700 1.1rem/1.3 var(--display); margin: .15rem 0 .35rem; }
-.pillar p { margin: 0; color: var(--muted); }
+.pillar { display: grid; grid-template-columns: 56px 1fr; gap: 1.2rem; padding: 1.4rem; transition: transform .2s; }
+.pillar:hover { transform: translateX(4px); }
+.pillar .ico { width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; background: var(--c); color: #fff; border: 2.5px solid var(--ink); font: 900 1.1rem var(--display); }
+.pillar h3 { font: 900 1.2rem/1.3 var(--display); margin: .1rem 0 .3rem; }
+.pillar p { margin: 0; color: var(--ink-2); }
 
-/* contato */
-.contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1px; background: var(--line-2); border: 1px solid var(--line-2); border-radius: 26px; overflow: hidden; }
-.contact { background: var(--bg-2); padding: 2rem; text-decoration: none; display: flex; flex-direction: column; gap: .6rem; transition: background .2s; min-height: 200px; }
-.contact:hover { background: #182050; }
-.contact .dot { width: 14px; height: 14px; border-radius: 4px; background: var(--c); }
-.contact h3 { font: 700 1.15rem/1.3 var(--display); margin: .4rem 0 0; }
-.contact p { color: var(--muted); margin: 0; flex: 1; }
-.contact span { font-weight: 600; display: inline-flex; align-items: center; gap: .4rem; }
-.contact:hover span svg { transform: translateX(4px); }
-.contact span svg { transition: transform .2s; }
+/* ---------- contato (guichês) ---------- */
+.contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.4rem; }
+.contact { padding: 1.6rem 1.5rem 1.5rem; text-decoration: none; display: flex; flex-direction: column; gap: .5rem; min-height: 230px; transition: transform .15s, box-shadow .15s; position: relative; }
+.contact:hover { transform: translate(-2px,-2px); box-shadow: 8px 8px 0 var(--ink); }
+.contact .who { display: flex; align-items: center; gap: .8rem; }
+.contact .who img { width: 64px; height: 64px; object-fit: contain; }
+.contact .who img.round { border-radius: 50%; }
+.contact .who small { font: 700 .72rem/1.2 var(--body); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.contact h3 { font: 900 1.25rem/1.25 var(--display); margin: .3rem 0 0; }
+.contact p { color: var(--ink-2); margin: 0; flex: 1; }
+.contact span.go { font-weight: 700; display: inline-flex; align-items: center; gap: .4rem; color: var(--c); }
+.contact .go svg { transition: transform .2s; }
+.contact:hover .go svg { transform: translateX(4px); }
+.contact::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 10px; background: var(--c); border-radius: 15px 15px 0 0; border-bottom: 2px solid var(--ink); }
 
-/* footer */
-footer { border-top: 1px solid var(--line); padding-block: 3rem calc(2rem + env(safe-area-inset-bottom, 0px)); }
-footer .wrap { display: grid; grid-template-columns: 1.2fr repeat(3, 1fr); gap: 2rem; }
-footer h4 { font: 500 .72rem/1 var(--display); letter-spacing: .18em; text-transform: uppercase; color: var(--muted); margin: 0 0 1rem; }
+/* ---------- footer ---------- */
+footer { padding-block: 3rem calc(2rem + env(safe-area-inset-bottom, 0px)); position: relative; }
+footer .rule { margin-bottom: 2.6rem; }
+footer .wrap { display: grid; grid-template-columns: 1.2fr repeat(3, 1fr); gap: 2rem; position: relative; }
+footer h4 { font: 700 .72rem/1 var(--body); letter-spacing: .2em; text-transform: uppercase; color: var(--red); margin: 0 0 1rem; }
 footer ul { list-style: none; padding: 0; margin: 0; display: grid; gap: .5rem; }
-footer a { color: var(--fg); text-decoration: none; opacity: .85; }
-footer a:hover { opacity: 1; text-decoration: underline; }
+footer a { color: var(--ink); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
 .copy { color: var(--muted); font-size: .88rem; margin-top: 1rem; }
+.sitting { width: 120px; margin-top: 1rem; }
 
 /* reveal */
-.reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .8s ease; }
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
 .reveal.in { opacity: 1; transform: none; }
 
 /* ---------- responsive ---------- */
 @media (max-width: 900px) {
-  .hero .wrap, .game, .game.alt, .studio { grid-template-columns: 1fr; }
+  .hero .wrap, .game, .studio { grid-template-columns: 1fr; }
   .game.alt .phone-col { order: 0; }
-  .board-wrap { width: min(80%, 340px); }
+  .facade { order: -1; }
+  .wip { grid-template-columns: 1fr; }
+  .wip .crew { justify-content: flex-end; }
   footer .wrap { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 760px) {
   .menu-btn { display: grid; }
   .nav {
     position: fixed; inset: 76px 0 auto 0; flex-direction: column; align-items: stretch; gap: 0;
-    background: rgba(11,15,34,.97); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line);
+    background: var(--paper); border-bottom: 3px solid var(--ink);
     padding: .5rem var(--gutter) 1.5rem; transform: translateY(-8px); opacity: 0; pointer-events: none; transition: .25s;
   }
-  .nav a { padding: 1rem 0; border-bottom: 1px solid var(--line); font-size: 1.1rem; color: var(--fg); }
-  .nav .pill { margin-top: 1rem; text-align: center; border: 0; }
+  .nav a { padding: 1rem 0; border-bottom: 1.5px solid rgba(51,44,34,.2); font-size: 1.1rem; color: var(--ink); }
+  .nav .pill { margin-top: 1rem; text-align: center; color: var(--paper-2); }
   .open .nav { transform: none; opacity: 1; pointer-events: auto; }
-  .open .top { background: rgba(11,15,34,.97); }
-  .phone { width: 220px; }
-  .hero { padding-top: 110px; }
-  .hero .wrap { gap: 2rem; }
-  .board-wrap { order: -1; width: min(70%, 260px); }
-  .scroll-hint { display: none; }
+  .open .top { background: var(--paper); }
+  .phone { width: 210px; }
+  .hero { padding-top: 96px; min-height: auto; }
+  .hero .wrap { gap: 2.4rem; }
+  .facade picture img { max-height: 56svh; object-fit: cover; object-position: center 20%; }
+  .facade .host { width: 32%; bottom: -12%; right: -3%; }
+  .facade .bubble { right: 34%; bottom: 8%; font-size: .88rem; max-width: 12rem; }
+  .game .owner, .game.alt .owner { right: -8px; left: auto; top: -46px; flex-direction: row; }
+  .owner img { width: 84px; height: 84px; }
+  .owner .bubble { font-size: .85rem; }
+  .game { padding-top: 3rem; }
+  .wip .crew img { width: 110px; }
+  .wip .crew .mec { width: 130px; }
 }
 @media (max-width: 480px) {
   footer .wrap { grid-template-columns: 1fr; }
   .stats b { font-size: 1.6rem; }
   .pillar { grid-template-columns: 1fr; }
+  .cast-grid { grid-template-columns: 1fr 1fr; gap: .9rem; }
+  .cutout { padding: .8rem .6rem .9rem; }
+  .cutout .fig { height: 120px; }
+  .cutout .fig img { max-height: 120px; }
+  .cutout .fig img.round { width: 110px; height: 110px; }
+  .cutout h3 { font-size: 1.05rem; }
+  .cutout q { font-size: .88rem; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -324,17 +401,14 @@ footer a:hover { opacity: 1; text-decoration: underline; }
 
 <header class="top" id="top">
   <div class="wrap">
-    <a class="logo" href="#inicio" aria-label="House Games Studio — início">
-      <span class="mark" aria-hidden="true">
-        <i></i><i style="--c:var(--coral)"></i><i></i>
-        <i style="--c:var(--coral)"></i><i style="--c:var(--yellow)"></i><i style="--c:var(--coral)"></i>
-        <i style="--c:var(--blue)"></i><i style="--c:var(--yellow)"></i><i style="--c:var(--green)"></i>
-      </span>
-      <span><b>HOUSE GAMES</b><small>STUDIO</small></span>
+    <a class="logo" href="#inicio" aria-label="Red Nose Game House — início">
+      <img src="assets/rnh/favicon.png" alt="" width="46" height="46">
+      <span><b>RED NOSE</b><small>GAME HOUSE</small></span>
     </a>
     <nav class="nav" id="nav" aria-label="Principal">
       <a href="#jogos">Jogos</a>
-      <a href="#estudio">Estúdio</a>
+      <a href="#personagens">Personagens</a>
+      <a href="#estudio">A casa</a>
       <a class="pill" href="#contato">Fale com a gente</a>
     </nav>
     <button class="menu-btn" id="menuBtn" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav"><span></span></button>
@@ -342,28 +416,31 @@ footer a:hover { opacity: 1; text-decoration: underline; }
 </header>
 
 <main>
-  <!-- HERO -->
+  <!-- HERO: a fachada -->
   <section class="hero" id="inicio">
     <div class="wrap">
       <div class="reveal">
-        <div class="eyebrow">Nossa missão</div>
-        <h1>Jogos pequenos que <em>cabem</em> no seu dia.</h1>
-        <p class="lead">Somos um estúdio independente de São Paulo. Fazemos puzzles e desafios de raciocínio para Android: partidas rápidas, regras claras e aquela vontade de jogar só mais uma.</p>
+        <div class="eyebrow">Abram as portas!</div>
+        <h1><span>Bem-vindo à</span> <em>Red Nose</em> <span>Game House.</span></h1>
+        <p class="lead">Uma casa de jogos que cabe no seu bolso. Somos um estúdio independente de São Paulo e fazemos puzzles e desafios de raciocínio para Android: partidas rápidas, regras claras e aquela vontade de jogar só mais uma.</p>
         <div class="ctas">
-          <a class="btn primary" href="#jogos">Conheça os jogos
-            <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v11M3 8.5 8 13.5l5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <a class="btn primary" href="#jogos">Entrar no salão
+            <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v11M3 8.5 8 13.5l5-5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
-          <a class="btn" href="#estudio">Sobre o estúdio</a>
+          <a class="btn" href="#personagens">Conheça a turma</a>
         </div>
       </div>
-      <div class="board-wrap reveal" aria-hidden="true">
-        <canvas id="hero-board"></canvas>
+      <div class="facade reveal">
+        <div class="frame panel">
+          <picture>
+            <source media="(max-width: 760px)" srcset="assets/rnh/fachada_vertical.webp">
+            <img src="assets/rnh/fachada_16x9.webp" alt="Fachada da Red Nose Game House com letreiro luminoso e portas abertas" width="1376" height="768">
+          </picture>
+        </div>
+        <span class="bubble down" style="--tail:78%">Entra, a casa é sua!</span>
+        <img class="host" src="assets/rnh/rednose_boasvindas.webp" alt="Red Nose, o pitbull dono da casa, acenando com a chave" width="471" height="512">
       </div>
     </div>
-    <a class="scroll-hint" href="#jogos">
-      <svg width="18" height="28" viewBox="0 0 18 28" aria-hidden="true"><path d="M9 1v25M2 19l7 7 7-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      role para descobrir
-    </a>
   </section>
 
   <!-- JOGOS -->
@@ -371,13 +448,17 @@ footer a:hover { opacity: 1; text-decoration: underline; }
     <div class="wrap">
       <div class="sec-head reveal">
         <div>
-          <div class="eyebrow">Nossos jogos</div>
+          <div class="eyebrow">As máquinas do salão</div>
           <h2>Feitos para jogar<br>em qualquer pausa.</h2>
         </div>
-        <p>Cada jogo começa com uma ideia simples e só sai do estúdio depois de muita partida de teste.</p>
+        <p>Cada máquina da casa tem um dono. Cada jogo começa com uma ideia simples e só sai do estúdio depois de muita partida de teste.</p>
       </div>
 
-      <article class="game reveal" style="--glow:var(--yellow)">
+      <article class="game panel reveal">
+        <div class="owner">
+          <span class="bubble right" style="--tail:45%">Desafio aceito!</span>
+          <img src="assets/rnh/garoto.webp" alt="O Garoto" width="160" height="160">
+        </div>
         <div class="game-info">
           <div class="game-id">
             <img src="block-puzzle-icon.png" alt="Ícone do Block Puzzle House" width="76" height="76">
@@ -406,14 +487,18 @@ footer a:hover { opacity: 1; text-decoration: underline; }
               <div class="tray">
                 <div class="piece" style="grid-template-columns:repeat(2,14px);--c:var(--blue)"><i></i><i></i><i></i><i class="x"></i></div>
                 <div class="piece" style="grid-template-columns:repeat(3,14px);--c:var(--green)"><i></i><i></i><i></i></div>
-                <div class="piece" style="grid-template-columns:repeat(2,14px);--c:var(--coral)"><i></i><i></i><i></i><i></i></div>
+                <div class="piece" style="grid-template-columns:repeat(2,14px);--c:var(--red)"><i></i><i></i><i></i><i></i></div>
               </div>
             </div>
           </div>
         </div>
       </article>
 
-      <article class="game alt reveal" style="--glow:var(--purple)">
+      <article class="game alt panel reveal">
+        <div class="owner">
+          <span class="bubble left" style="--tail:45%">Achei o par!</span>
+          <img src="assets/rnh/jogador.webp" alt="O Jogador" width="160" height="160">
+        </div>
         <div class="game-info">
           <div class="game-id">
             <img src="brain-house-icon.png" alt="Ícone do Brain House" width="76" height="76">
@@ -436,13 +521,13 @@ footer a:hover { opacity: 1; text-decoration: underline; }
         </div>
         <div class="phone-col">
           <div class="phone" style="--tilt:-5deg">
-            <div class="screen stroop-screen">
+            <div class="screen">
               <div class="stroop-timer"><i id="st-timer"></i></div>
               <p class="stroop-q">Toque na <b>cor</b> da palavra,<br>não no que está escrito</p>
               <div class="stroop-word" id="st-word">AZUL</div>
               <div class="stroop-btns" id="st-btns">
-                <span style="--c:var(--coral)"></span><span style="--c:var(--blue)"></span>
-                <span style="--c:var(--green)"></span><span style="--c:var(--yellow)"></span>
+                <span style="--c:var(--red)"></span><span style="--c:var(--blue)"></span>
+                <span style="--c:var(--green)"></span><span style="--c:var(--gold)"></span>
               </div>
             </div>
           </div>
@@ -451,18 +536,18 @@ footer a:hover { opacity: 1; text-decoration: underline; }
     </div>
   </section>
 
-  <!-- EM PRODUÇÃO -->
+  <!-- EM PRODUÇÃO: a oficina -->
   <section id="em-producao">
     <div class="wrap">
       <div class="sec-head reveal">
         <div>
-          <div class="eyebrow">Em produção</div>
-          <h2>O próximo da casa.</h2>
+          <div class="eyebrow">Na oficina</div>
+          <h2>A próxima máquina da casa.</h2>
         </div>
-        <p>Mais um jogo a caminho, construído com o mesmo cuidado dos outros.</p>
+        <p>O Mecânico está apertando os últimos parafusos. Logo mais ela vai para o salão.</p>
       </div>
-      <div class="wip-grid">
-        <div class="wip reveal">
+      <div class="wip panel reveal">
+        <div>
           <div class="art crossword" aria-hidden="true">
             <i class="blk"></i><i>C</i><i>A</i><i class="blk"></i><i>P</i>
             <i>R</i><i>O</i><i class="blk"></i><i>D</i><i>A</i>
@@ -471,65 +556,152 @@ footer a:hover { opacity: 1; text-decoration: underline; }
           </div>
           <span class="tag">Palavra cruzada · Em breve</span>
           <h3>Cruzadinhas House</h3>
-          <p>Palavras cruzadas em português, com três níveis de dificuldade e centenas de cruzadinhas para resolver.</p>
+          <p>Palavras cruzadas em português, com três níveis de dificuldade e centenas de cruzadinhas para resolver. Quem toma conta dela é o Palpiteiro, aquele que dá pitaco em tudo.</p>
           <div class="progress">
             <small><span>Em desenvolvimento</span><span>80%</span></small>
-            <div class="bar"><i style="--c:var(--yellow);--w:80%"></i></div>
+            <div class="bar"><i style="--w:80%"></i></div>
           </div>
+        </div>
+        <div class="crew">
+          <div class="who">
+            <span class="bubble down" style="--tail:45%">Essa eu sei!</span>
+            <img src="assets/rnh/palpiteiro_corpo.webp" alt="O Palpiteiro, de boina e óculos de lente grossa, com o dedo levantado" width="312" height="512">
+          </div>
+          <img class="mec" src="assets/rnh/mecanico_apertando.webp" alt="O Mecânico apertando um parafuso com a chave inglesa" width="480" height="508">
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ESTÚDIO -->
+  <!-- PERSONAGENS: página de jornal -->
+  <section id="personagens">
+    <div class="wrap">
+      <div class="masthead reveal">
+        <hr class="rule">
+        <h2>Os moradores da casa</h2>
+        <hr class="rule">
+        <p class="eyebrow" style="margin-top:1rem">Edição especial · Toque num recorte para ler a tirinha</p>
+      </div>
+      <div class="cast-page panel reveal">
+        <div class="cast-grid">
+          <article class="cutout" style="--r:-1.5deg">
+            <div class="fig"><img src="assets/rnh/rednose_boasvindas.webp" alt="Red Nose" loading="lazy"></div>
+            <h3>Red Nose</h3><p class="role">O dono da casa</p><q>Abram as portas!</q>
+            <button data-strip="red-nose" data-title="Red Nose em: O dono da casa!">Ler a tirinha</button>
+          </article>
+          <article class="cutout" style="--r:1deg">
+            <div class="fig"><img class="round" src="assets/rnh/garoto.webp" alt="O Garoto" loading="lazy"></div>
+            <h3>O Garoto</h3><p class="role">Block Puzzle House</p><q>Desafio aceito!</q>
+            <button data-strip="garoto" data-title="O Garoto em: Block Puzzle House!">Ler a tirinha</button>
+          </article>
+          <article class="cutout" style="--r:-.5deg">
+            <div class="fig"><img class="round" src="assets/rnh/garota.webp" alt="A Garota" loading="lazy"></div>
+            <h3>A Garota</h3><p class="role">Rainha do combo</p><q>Olho de águia!</q>
+            <button data-strip="garota" data-title="A Garota em: Separando joias!">Ler a tirinha</button>
+          </article>
+          <article class="cutout" style="--r:1.5deg">
+            <div class="fig"><img class="round" src="assets/rnh/jogador.webp" alt="O Jogador" loading="lazy"></div>
+            <h3>O Jogador</h3><p class="role">Brain House</p><q>Achei o par!</q>
+            <button data-strip="jogador" data-title="O Jogador em: Memória e concentração!">Ler a tirinha</button>
+          </article>
+          <article class="cutout" style="--r:-1deg">
+            <div class="fig"><img class="round" src="assets/rnh/camarada.webp" alt="O Camarada" loading="lazy"></div>
+            <h3>O Camarada</h3><p class="role">Recebe quem chega</p><q>Vem comigo!</q>
+            <button data-strip="camarada" data-title="O Camarada em: Boas-vindas ao salão!">Ler a tirinha</button>
+          </article>
+          <article class="cutout" style="--r:.8deg">
+            <div class="fig"><img src="assets/rnh/bilheteiro_corpo.webp" alt="O Bilheteiro" loading="lazy"></div>
+            <h3>O Bilheteiro</h3><p class="role">Cuida da bilheteria</p><q>Esse tíquete já foi usado!</q>
+            <button data-strip="bilheteiro" data-title="O Bilheteiro em: Um dia difícil na bilheteria!">Ler a tirinha</button>
+          </article>
+          <article class="cutout" style="--r:-1.2deg">
+            <div class="fig"><img class="round" src="assets/rnh/valentao.webp" alt="O Valentão" loading="lazy"></div>
+            <h3>O Valentão</h3><p class="role">Desafio diário</p><q>Quem é o próximo?</q>
+            <button data-strip="valentao" data-title="O Valentão em: Teste de força!">Ler a tirinha</button>
+          </article>
+          <article class="cutout" style="--r:1.2deg">
+            <div class="fig"><img src="assets/rnh/mecanico_corpo.webp" alt="O Mecânico" loading="lazy"></div>
+            <h3>O Mecânico</h3><p class="role">Manutenção das máquinas</p><q>Só um probleminha técnico…</q>
+            <button data-strip="mecanico" data-title="O Mecânico em: Manutenção das máquinas!">Ler a tirinha</button>
+          </article>
+          <article class="cutout" style="--r:-.8deg">
+            <div class="fig"><img class="round" src="assets/rnh/torcedora.webp" alt="A Torcedora" loading="lazy"></div>
+            <h3>A Torcedora</h3><p class="role">A melhor torcida da casa</p><q>Você consegue!</q>
+            <button data-strip="torcedora" data-title="A Torcedora em: Torcida pro campeão!">Ler a tirinha</button>
+          </article>
+          <article class="cutout" style="--r:1deg">
+            <div class="fig"><img src="assets/rnh/palpiteiro_corpo.webp" alt="O Palpiteiro" loading="lazy"></div>
+            <h3>O Palpiteiro</h3><p class="role">Cruzadinhas House</p><q>Essa eu sei!</q>
+            <button data-strip="palpiteiro" data-title="O Palpiteiro em: Palavras cruzadas!">Ler a tirinha</button>
+          </article>
+        </div>
+      </div>
+    </div>
+    <dialog class="strip" id="stripDlg" aria-label="Tirinha">
+      <button class="close" id="stripClose" aria-label="Fechar">×</button>
+      <img id="stripImg" alt="">
+    </dialog>
+  </section>
+
+  <!-- ESTÚDIO: a casa -->
   <section id="estudio">
     <div class="wrap studio">
       <div class="studio-copy reveal">
-        <div class="eyebrow">O estúdio</div>
-        <h2>Uma casa de jogos, peça por peça.</h2>
-        <p>A House Games Studio nasceu em São Paulo. Quem toca o estúdio vem da engenharia: eletrônica, firmware e inteligência artificial. Por isso cada jogo é tratado como produto, medido, testado e ajustado até a curva de dificuldade ficar no ponto.</p>
-        <div class="stats">
-          <div><b style="color:var(--yellow)">2</b><span>jogos lançados</span></div>
+        <div class="eyebrow">A casa</div>
+        <h2>Um salão de jogos, peça por peça.</h2>
+        <p>A Red Nose Game House nasceu em São Paulo. Quem toca a casa vem da engenharia: eletrônica, firmware e inteligência artificial. Por isso cada jogo é tratado como uma máquina de verdade: medido, testado e ajustado até a curva de dificuldade ficar no ponto.</p>
+        <div class="stats panel">
+          <div><b style="color:var(--green)">2</b><span>jogos lançados</span></div>
           <div><b style="color:var(--blue)">Godot</b><span>engine dos nossos jogos</span></div>
-          <div><b style="color:var(--green)">100%</b><span>independente</span></div>
-          <div><b style="color:var(--coral)">SP</b><span>São Paulo, Brasil</span></div>
+          <div><b style="color:var(--gold)">100%</b><span>independente</span></div>
+          <div><b style="color:var(--red)">SP</b><span>São Paulo, Brasil</span></div>
         </div>
       </div>
-      <div class="pillars">
-        <div class="pillar reveal" style="--c:var(--yellow)"><div class="ico">01</div><div><h3>Partidas curtas</h3><p>Dá para jogar na fila, no ônibus ou no intervalo. Um minuto já vale uma partida inteira.</p></div></div>
-        <div class="pillar reveal" style="--c:var(--blue)"><div class="ico">02</div><div><h3>Regras em 5 segundos</h3><p>Se precisa de tutorial longo, a ideia volta para a prancheta. A profundidade vem depois.</p></div></div>
-        <div class="pillar reveal" style="--c:var(--green)"><div class="ico">03</div><div><h3>Funciona offline</h3><p>Os jogos rodam sem internet e em celulares mais simples. Ninguém fica de fora.</p></div></div>
-        <div class="pillar reveal" style="--c:var(--coral)"><div class="ico">04</div><div><h3>Ajustado com dados</h3><p>Dificuldade, ritmo e recompensas são calibrados com testes reais, não no achismo.</p></div></div>
+      <div>
+        <div class="photo panel reveal">
+          <img src="assets/rnh/interior_arcade.webp" alt="Interior do salão da Red Nose Game House, com fliperamas, bilheteria e os personagens" loading="lazy" width="1400" height="1046">
+          <div class="owner"><img src="assets/rnh/rednose_orgulho.webp" alt="Red Nose de mãos na cintura" loading="lazy"></div>
+        </div>
+        <div class="pillars">
+          <div class="pillar panel reveal" style="--c:var(--green)"><div class="ico">01</div><div><h3>Partidas curtas</h3><p>Dá para jogar na fila, no ônibus ou no intervalo. Um minuto já vale uma partida inteira.</p></div></div>
+          <div class="pillar panel reveal" style="--c:var(--blue)"><div class="ico">02</div><div><h3>Regras em 5 segundos</h3><p>Se precisa de tutorial longo, a ideia volta para a prancheta. A profundidade vem depois.</p></div></div>
+          <div class="pillar panel reveal" style="--c:var(--gold)"><div class="ico">03</div><div><h3>Funciona offline</h3><p>Os jogos rodam sem internet e em celulares mais simples. Ninguém fica de fora.</p></div></div>
+          <div class="pillar panel reveal" style="--c:var(--red)"><div class="ico">04</div><div><h3>Ajustado com dados</h3><p>Dificuldade, ritmo e recompensas são calibrados com testes reais, não no achismo.</p></div></div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- CONTATO -->
+  <!-- CONTATO: os guichês -->
   <section id="contato">
     <div class="wrap">
       <div class="sec-head reveal">
         <div>
-          <div class="eyebrow">Contato</div>
+          <div class="eyebrow">Os guichês</div>
           <h2>Vamos conversar.</h2>
         </div>
-        <p>Escolha o assunto e o e-mail já sai com o título certo.</p>
+        <p>Escolha o guichê certo e o e-mail já sai com o título do assunto.</p>
       </div>
-      <div class="contact-grid reveal">
-        <a class="contact" style="--c:var(--yellow)" href="mailto:filipepereiranunes@gmail.com?subject=%5BSuporte%5D%20">
-          <i class="dot"></i><h3>Suporte aos jogos</h3><p>Bugs, dúvidas, progresso perdido ou compras.</p>
-          <span>Enviar e-mail <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M1 7h11M7.5 2.5 12 7l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div class="contact-grid">
+        <a class="contact panel reveal" style="--c:var(--green)" href="mailto:filipepereiranunes@gmail.com?subject=%5BSuporte%5D%20">
+          <div class="who"><img src="assets/rnh/mecanico_corpo.webp" alt="" loading="lazy"><small>Atendido pelo<br>Mecânico</small></div>
+          <h3>Suporte aos jogos</h3><p>Bugs, dúvidas, progresso perdido ou compras.</p>
+          <span class="go">Enviar e-mail <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M1 7h11M7.5 2.5 12 7l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
         </a>
-        <a class="contact" style="--c:var(--blue)" href="mailto:filipepereiranunes@gmail.com?subject=%5BParcerias%5D%20">
-          <i class="dot"></i><h3>Parcerias e publishers</h3><p>Publicação, distribuição, portais web e propostas de negócio.</p>
-          <span>Enviar e-mail <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M1 7h11M7.5 2.5 12 7l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <a class="contact panel reveal" style="--c:var(--gold)" href="mailto:filipepereiranunes@gmail.com?subject=%5BParcerias%5D%20">
+          <div class="who"><img src="assets/rnh/bilheteiro_corpo.webp" alt="" loading="lazy"><small>Atendido pelo<br>Bilheteiro</small></div>
+          <h3>Parcerias e publishers</h3><p>Publicação, distribuição, portais web e propostas de negócio.</p>
+          <span class="go">Enviar e-mail <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M1 7h11M7.5 2.5 12 7l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
         </a>
-        <a class="contact" style="--c:var(--green)" href="mailto:filipepereiranunes@gmail.com?subject=%5BCriadores%5D%20">
-          <i class="dot"></i><h3>Criadores de conteúdo</h3><p>Streamers e youtubers que querem jogar ou divulgar nossos jogos.</p>
-          <span>Enviar e-mail <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M1 7h11M7.5 2.5 12 7l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <a class="contact panel reveal" style="--c:var(--red)" href="mailto:filipepereiranunes@gmail.com?subject=%5BCriadores%5D%20">
+          <div class="who"><img class="round" src="assets/rnh/torcedora.webp" alt="" loading="lazy"><small>Atendido pela<br>Torcedora</small></div>
+          <h3>Criadores de conteúdo</h3><p>Streamers e youtubers que querem jogar ou divulgar nossos jogos.</p>
+          <span class="go">Enviar e-mail <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M1 7h11M7.5 2.5 12 7l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
         </a>
-        <a class="contact" style="--c:var(--coral)" href="mailto:filipepereiranunes@gmail.com?subject=%5BImprensa%5D%20">
-          <i class="dot"></i><h3>Imprensa</h3><p>Entrevistas, materiais de divulgação e informações do estúdio.</p>
-          <span>Enviar e-mail <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M1 7h11M7.5 2.5 12 7l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <a class="contact panel reveal" style="--c:var(--blue)" href="mailto:filipepereiranunes@gmail.com?subject=%5BImprensa%5D%20">
+          <div class="who"><img class="round" src="assets/rnh/camarada.webp" alt="" loading="lazy"><small>Atendido pelo<br>Camarada</small></div>
+          <h3>Imprensa</h3><p>Entrevistas, materiais de divulgação e informações do estúdio.</p>
+          <span class="go">Enviar e-mail <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M1 7h11M7.5 2.5 12 7l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
         </a>
       </div>
     </div>
@@ -537,17 +709,15 @@ footer a:hover { opacity: 1; text-decoration: underline; }
 </main>
 
 <footer>
+  <div class="wrap"><hr class="rule" style="grid-column:1/-1"></div>
   <div class="wrap">
     <div>
-      <a class="logo" href="#inicio" aria-label="House Games Studio — voltar ao topo">
-        <span class="mark" aria-hidden="true">
-          <i></i><i style="--c:var(--coral)"></i><i></i>
-          <i style="--c:var(--coral)"></i><i style="--c:var(--yellow)"></i><i style="--c:var(--coral)"></i>
-          <i style="--c:var(--blue)"></i><i style="--c:var(--yellow)"></i><i style="--c:var(--green)"></i>
-        </span>
-        <span><b>HOUSE GAMES</b><small>STUDIO</small></span>
+      <a class="logo" href="#inicio" aria-label="Red Nose Game House — voltar ao topo">
+        <img src="assets/rnh/favicon.png" alt="" width="46" height="46">
+        <span><b>RED NOSE</b><small>GAME HOUSE</small></span>
       </a>
-      <p class="copy">© <span id="year">2026</span> House Games Studio · São Paulo, Brasil</p>
+      <p class="copy">© <span id="year">2026</span> Red Nose Game House · São Paulo, Brasil</p>
+      <img class="sitting" src="assets/rnh/rednose_sentado.webp" alt="Red Nose sentado de braços cruzados" loading="lazy">
     </div>
     <div>
       <h4>Jogos</h4>
@@ -559,7 +729,7 @@ footer a:hover { opacity: 1; text-decoration: underline; }
     </div>
     <div>
       <h4>Contato</h4>
-      <ul><li><a href="mailto:filipepereiranunes@gmail.com">filipepereiranunes@gmail.com</a></li></ul>
+      <ul><li><a href="mailto:filipepereiranunes@gmail.com">filipepereiranunes@gmail.com</a></li><li><a href="#personagens">Os personagens</a></li></ul>
     </div>
   </div>
 </footer>
@@ -567,7 +737,9 @@ footer a:hover { opacity: 1; text-decoration: underline; }
 <script>
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const COLORS = ['#ffc928', '#42a5f5', '#4fd8a8', '#ff6b57', '#f472b6', '#8b5cf6'];
+  const css = getComputedStyle(document.documentElement);
+  const v = n => css.getPropertyValue(n).trim();
+  const COLORS = [v('--gold'), v('--blue'), v('--green'), v('--red'), '#8a6fb0', '#c66a8a'];
   document.getElementById('year').textContent = new Date().getFullYear();
 
   /* header + menu */
@@ -589,84 +761,16 @@ footer a:hover { opacity: 1; text-decoration: underline; }
   }), { threshold: .12 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-  /* HERO: blocos caem e montam uma casa em pixel art, depois limpam linha por linha */
-  const cv = document.getElementById('hero-board');
-  const ctx = cv.getContext('2d');
-  const N = 10;
-  const HOUSE = [
-    '....YY....',
-    '...YYYY...',
-    '..CCCCCC..',
-    '.CCCCCCCC.',
-    'CCCCCCCCCC',
-    '.BBBBBBBB.',
-    '.BGGBBYYB.',
-    '.BGGBBYYB.',
-    '.BBBPPBBB.',
-    '.BBBPPBBB.'
-  ];
-  const MAP = { Y: '#ffc928', C: '#ff6b57', B: '#42a5f5', G: '#4fd8a8', P: '#8b5cf6' };
-  let cells = [], size = 0, dpr = 1;
-  function resize() {
-    dpr = Math.min(devicePixelRatio || 1, 2);
-    const r = cv.getBoundingClientRect();
-    cv.width = r.width * dpr; cv.height = r.height * dpr;
-    size = cv.width / N;
-  }
-  function build() {
-    cells = [];
-    const order = [];
-    for (let y = N - 1; y >= 0; y--) for (let x = 0; x < N; x++) {
-      const k = HOUSE[y][x]; if (k !== '.') order.push({ x, y, c: MAP[k] });
-    }
-    order.forEach((o, i) => cells.push({ ...o, t0: i * 38 + Math.random() * 60, a: 1 }));
-  }
-  function roundRect(x, y, w, h, r) {
-    ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r);
-    ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath();
-  }
-  function block(px, py, c, a, s = 1) {
-    const g = size * .08, w = (size - g * 2) * s, o = (size - g * 2 - w) / 2;
-    ctx.globalAlpha = a;
-    ctx.fillStyle = c; roundRect(px + g + o, py + g + o, w, w, size * .16); ctx.fill();
-    ctx.fillStyle = 'rgba(0,0,0,.22)'; roundRect(px + g + o, py + g + o + w * .78, w, w * .22, size * .1); ctx.fill();
-    ctx.fillStyle = 'rgba(255,255,255,.35)'; roundRect(px + g + o + w * .18, py + g + o + w * .12, w * .38, w * .1, 3); ctx.fill();
-    ctx.globalAlpha = 1;
-  }
-  let start = performance.now(), phase = 'build';
-  const FALL = 520;
-  function frame(now) {
-    const t = now - start;
-    ctx.clearRect(0, 0, cv.width, cv.height);
-    for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
-      ctx.fillStyle = 'rgba(255,255,255,.045)';
-      const g = size * .08; roundRect(x * size + g, y * size + g, size - g * 2, size - g * 2, size * .16); ctx.fill();
-    }
-    const last = cells.length ? cells[cells.length - 1].t0 + FALL : 0;
-    if (phase === 'build') {
-      for (const c of cells) {
-        const k = Math.min(1, Math.max(0, (t - c.t0) / FALL));
-        if (k <= 0) continue;
-        const e = 1 - Math.pow(1 - k, 3);
-        const fromY = -2 * size;
-        block(c.x * size, fromY + (c.y * size - fromY) * e, c.c, Math.min(1, k * 3));
-      }
-      if (t > last + 1800) { phase = 'clear'; start = now; }
-    } else {
-      for (const c of cells) {
-        const d = (N - 1 - c.y) * 90;
-        const k = Math.min(1, Math.max(0, (t - d) / 380));
-        const col = k > 0 && k < .35 ? '#ffffff' : c.c;
-        if (k < 1) block(c.x * size, c.y * size, col, 1 - k, 1 - k * .5);
-      }
-      if (t > N * 90 + 700) { phase = 'build'; build(); start = now; }
-    }
-    if (!reduce) requestAnimationFrame(frame);
-  }
-  resize(); build();
-  addEventListener('resize', resize);
-  if (reduce) { start = performance.now() - 99999; frame(performance.now()); }
-  else requestAnimationFrame(frame);
+  /* tirinhas: abre a página do personagem em tamanho grande */
+  const dlg = document.getElementById('stripDlg');
+  const dimg = document.getElementById('stripImg');
+  document.querySelectorAll('[data-strip]').forEach(b => b.addEventListener('click', () => {
+    dimg.src = 'assets/rnh/tirinhas/' + b.dataset.strip + '.webp';
+    dimg.alt = 'Tirinha: ' + b.dataset.title;
+    dlg.showModal();
+  }));
+  document.getElementById('stripClose').addEventListener('click', () => dlg.close());
+  dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
 
   /* Block Puzzle: tabuleiro que enche uma linha e limpa */
   const bb = document.getElementById('bp-board');
@@ -675,9 +779,9 @@ footer a:hover { opacity: 1; text-decoration: underline; }
   for (let i = 0; i < 64; i++) { const el = document.createElement('i'); bb.appendChild(el); cellsBP.push(el); }
   const seed = [0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0, 0,0,0,1,0,0,0,0, 0,0,1,1,0,0,2,0, 3,0,1,0,0,2,2,0, 3,3,0,0,4,4,2,0, 3,1,1,0,4,4,0,2, 0,1,1,2,2,0,3,3];
   function paintSeed() {
-    seed.forEach((v, i) => {
+    seed.forEach((n, i) => {
       const el = cellsBP[i]; el.className = '';
-      if (v) { el.classList.add('on'); el.style.setProperty('--c', COLORS[v - 1]); }
+      if (n) { el.classList.add('on'); el.style.setProperty('--c', COLORS[n - 1]); }
     });
   }
   paintSeed();
@@ -689,7 +793,7 @@ footer a:hover { opacity: 1; text-decoration: underline; }
     const step = setInterval(() => {
       if (i < gaps.length) {
         const el = cellsBP[row * 8 + gaps[i]];
-        el.classList.add('on'); el.style.setProperty('--c', COLORS[5]); i++;
+        el.classList.add('on'); el.style.setProperty('--c', COLORS[4]); i++;
       } else {
         clearInterval(step);
         for (let x = 0; x < 8; x++) cellsBP[row * 8 + x].classList.add('flash');
@@ -708,13 +812,13 @@ footer a:hover { opacity: 1; text-decoration: underline; }
   const word = document.getElementById('st-word');
   const btns = [...document.querySelectorAll('#st-btns span')];
   const timer = document.getElementById('st-timer');
-  const ink = ['#ff6b57', '#42a5f5', '#4fd8a8', '#ffc928'];
+  const ink = [v('--red'), v('--blue'), v('--green'), v('--gold')];
   let wi = 0;
   function nextStroop() {
     const [w, meaning] = words[wi++ % words.length];
     let c; do { c = Math.floor(Math.random() * 4); } while (c === meaning);
     word.textContent = w; word.style.setProperty('--n', Math.max(w.length, 5)); word.style.fontSize = ''; word.style.color = ink[c];
-    const room = word.parentElement.clientWidth - 32;
+    const room = word.parentElement.clientWidth - 28;
     if (word.scrollWidth > room) word.style.fontSize = (parseFloat(getComputedStyle(word).fontSize) * room / word.scrollWidth * .96) + 'px';
     timer.animate([{ transform: 'scaleX(1)' }, { transform: 'scaleX(0)' }], { duration: 1900, easing: 'linear' });
     setTimeout(() => { btns[c].classList.add('hit'); setTimeout(() => btns[c].classList.remove('hit'), 300); }, 1300);
