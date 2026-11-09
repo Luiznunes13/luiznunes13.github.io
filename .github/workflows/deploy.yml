@@ -18,8 +18,11 @@ jobs:
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.VM_SSH_KEY }}
           script: |
+            set -e
             cd /var/www/html
-            sudo git pull origin main || sudo git pull origin master
+            sudo git fetch origin
+            sudo git reset --hard origin/main
+            sudo git clean -fd
             sudo chown -R www-data:www-data /var/www/html
             sudo chmod -R 755 /var/www/html
             sudo systemctl reload nginx
