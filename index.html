@@ -235,6 +235,9 @@ h2 { font: 700 clamp(1.9rem, 4.4vw, 3.2rem)/1.1 var(--display); margin: 1.2rem 0
   position: relative; overflow: hidden; min-height: 260px; display: flex; flex-direction: column;
 }
 .wip .art { height: 90px; margin-bottom: 1.4rem; display: flex; align-items: end; gap: 4px; }
+.wip .art.crossword { display: grid; grid-template-columns: repeat(5, 1fr); grid-auto-rows: 1fr; gap: 3px; height: 90px; width: min(100%, 230px); }
+.wip .art.crossword i { display: grid; place-items: center; border-radius: 6px; background: var(--surface-2); color: var(--fg); font: 700 .85rem/1 var(--display); }
+.wip .art.crossword i.blk { background: rgba(0,0,0,.4); }
 .wip .tag { align-self: flex-start; }
 .wip h3 { font: 700 1.4rem/1.15 var(--display); margin: .8rem 0 .5rem; }
 .wip p { color: var(--muted); margin: 0; }
@@ -388,9 +391,9 @@ footer a:hover { opacity: 1; text-decoration: underline; }
             <li>Tabuleiro 8×8</li><li>Combos</li><li>Joga sem internet</li><li>Grátis</li>
           </ul>
           <div class="store-row">
-            <a class="store" aria-disabled="true" role="link" title="Em breve no Google Play">
+            <a class="store" href="https://play.google.com/store/apps/details?id=com.nunes.blockpuzzle" target="_blank" rel="noopener" title="Baixar na Google Play">
               <svg width="24" height="26" viewBox="0 0 24 26" aria-hidden="true"><path d="M1.2.6 13.4 13 1.2 25.4A1.6 1.6 0 0 1 .5 24V2c0-.6.3-1.1.7-1.4Z" fill="#00d7fe"/><path d="m17.5 8.9-4.1 4.1-12.2-12.4c.4-.3 1-.3 1.6 0Z" fill="#00f076"/><path d="M13.4 13 17.5 17.1 2.8 25.4c-.6.3-1.2.3-1.6 0Z" fill="#ff3a44"/><path d="m17.5 8.9 4.7 2.7c1.1.6 1.1 2.2 0 2.8l-4.7 2.7L13.4 13Z" fill="#ffd500"/></svg>
-              <span><small>Em breve no</small><b>Google Play</b></span>
+              <span><small>Disponível no</small><b>Google Play</b></span>
             </a>
             <a class="link-sm" href="block-puzzle/privacidade.html">Política de privacidade</a>
           </div>
@@ -424,9 +427,9 @@ footer a:hover { opacity: 1; text-decoration: underline; }
             <li>Stroop</li><li>Sequência</li><li>N-back</li><li>Desafio diário</li>
           </ul>
           <div class="store-row">
-            <a class="store" aria-disabled="true" role="link" title="Em breve no Google Play">
+            <a class="store" href="https://play.google.com/store/apps/details?id=com.nunes.brainhouse" target="_blank" rel="noopener" title="Baixar na Google Play">
               <svg width="24" height="26" viewBox="0 0 24 26" aria-hidden="true"><path d="M1.2.6 13.4 13 1.2 25.4A1.6 1.6 0 0 1 .5 24V2c0-.6.3-1.1.7-1.4Z" fill="#00d7fe"/><path d="m17.5 8.9-4.1 4.1-12.2-12.4c.4-.3 1-.3 1.6 0Z" fill="#00f076"/><path d="M13.4 13 17.5 17.1 2.8 25.4c-.6.3-1.2.3-1.6 0Z" fill="#ff3a44"/><path d="m17.5 8.9 4.7 2.7c1.1.6 1.1 2.2 0 2.8l-4.7 2.7L13.4 13Z" fill="#ffd500"/></svg>
-              <span><small>Em breve no</small><b>Google Play</b></span>
+              <span><small>Disponível no</small><b>Google Play</b></span>
             </a>
             <a class="link-sm" href="brain-house/privacidade.html">Política de privacidade</a>
           </div>
@@ -448,6 +451,36 @@ footer a:hover { opacity: 1; text-decoration: underline; }
     </div>
   </section>
 
+  <!-- EM PRODUÇÃO -->
+  <section id="em-producao">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div>
+          <div class="eyebrow">Em produção</div>
+          <h2>O próximo da casa.</h2>
+        </div>
+        <p>Mais um jogo a caminho, construído com o mesmo cuidado dos outros.</p>
+      </div>
+      <div class="wip-grid">
+        <div class="wip reveal">
+          <div class="art crossword" aria-hidden="true">
+            <i class="blk"></i><i>C</i><i>A</i><i class="blk"></i><i>P</i>
+            <i>R</i><i>O</i><i class="blk"></i><i>D</i><i>A</i>
+            <i>U</i><i class="blk"></i><i>D</i><i>I</i><i>L</i>
+            <i>Z</i><i>N</i><i>A</i><i class="blk"></i><i>A</i>
+          </div>
+          <span class="tag">Palavra cruzada · Em breve</span>
+          <h3>Cruzadinhas House</h3>
+          <p>Palavras cruzadas em português, com três níveis de dificuldade e centenas de cruzadinhas para resolver.</p>
+          <div class="progress">
+            <small><span>Em desenvolvimento</span><span>80%</span></small>
+            <div class="bar"><i style="--c:var(--yellow);--w:80%"></i></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ESTÚDIO -->
   <section id="estudio">
     <div class="wrap studio">
@@ -456,7 +489,7 @@ footer a:hover { opacity: 1; text-decoration: underline; }
         <h2>Uma casa de jogos, peça por peça.</h2>
         <p>A House Games Studio nasceu em São Paulo. Quem toca o estúdio vem da engenharia: eletrônica, firmware e inteligência artificial. Por isso cada jogo é tratado como produto, medido, testado e ajustado até a curva de dificuldade ficar no ponto.</p>
         <div class="stats">
-          <div><b style="color:var(--yellow)">2</b><span>jogos lançando</span></div>
+          <div><b style="color:var(--yellow)">2</b><span>jogos lançados</span></div>
           <div><b style="color:var(--blue)">Godot</b><span>engine dos nossos jogos</span></div>
           <div><b style="color:var(--green)">100%</b><span>independente</span></div>
           <div><b style="color:var(--coral)">SP</b><span>São Paulo, Brasil</span></div>
@@ -518,7 +551,7 @@ footer a:hover { opacity: 1; text-decoration: underline; }
     </div>
     <div>
       <h4>Jogos</h4>
-      <ul><li><a href="#jogos">Block Puzzle House</a></li><li><a href="#jogos">Brain House</a></li></ul>
+      <ul><li><a href="#jogos">Block Puzzle House</a></li><li><a href="#jogos">Brain House</a></li><li><a href="#em-producao">Cruzadinhas House</a></li></ul>
     </div>
     <div>
       <h4>Privacidade</h4>
