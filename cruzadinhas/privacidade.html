@@ -130,11 +130,11 @@ footer a:hover { text-decoration: underline; }
       <img src="../assets/rnh/palpiteiro_corpo.webp" alt="O Palpiteiro, do Cruzadinhas House" width="96" height="96" style="object-fit:contain;background:var(--paper-2)">
       <div>
         <h1>Política de Privacidade do <span>Cruzadinhas House</span></h1>
-        <p class="meta"><b>Red Nose Game House</b> · Atualizada em 10 de novembro de 2026 (v1)</p>
+        <p class="meta"><b>Red Nose Game House</b> · Atualizada em 10 de novembro de 2026 (v2)</p>
       </div>
     </div>
   <div class="summary">
-    <p><strong>Resumo:</strong> o Cruzadinhas House não pede cadastro e nós não coletamos nem vendemos dados pessoais. Seu progresso fica salvo só no seu aparelho. O jogo exibe anúncios do Google AdMob, que usa alguns dados do aparelho para mostrar e medir os anúncios, como explicado abaixo.</p>
+    <p><strong>Resumo:</strong> o Cruzadinhas House não pede cadastro e nós não vendemos dados. Seu progresso fica salvo no seu aparelho. Para melhorar o jogo, usamos o Google Firebase para contar de forma anônima como o jogo é usado (por exemplo, quais cruzadinhas são resolvidas) e para receber relatórios de travamentos. O jogo exibe anúncios do Google AdMob, que usa alguns dados do aparelho para mostrar e medir os anúncios, como explicado abaixo.</p>
   </div>
   </div>
 
@@ -145,6 +145,7 @@ footer a:hover { text-decoration: underline; }
         <li><a href="#quem-somos">Quem somos</a></li>
         <li><a href="#o-que-fica-salvo-no-seu-aparelho">O que fica salvo no seu aparelho</a></li>
         <li><a href="#o-que-nao-coletamos">O que não coletamos</a></li>
+        <li><a href="#estatisticas-de-uso-firebase">Estatísticas de uso (Firebase)</a></li>
         <li><a href="#conexao-com-a-internet">Conexão com a internet</a></li>
         <li><a href="#permissoes-do-android">Permissões do Android</a></li>
         <li><a href="#anuncios-google-admob">Anúncios (Google AdMob)</a></li>
@@ -180,6 +181,16 @@ footer a:hover { text-decoration: underline; }
     <p>Nós não recebemos nenhum dado dos anúncios. O que o Google AdMob usa está descrito na seção de anúncios.</p>
   </section>
 
+    <section id="estatisticas-de-uso-firebase">
+    <h2>Estatísticas de uso (Firebase)</h2>
+    <p>O jogo usa dois serviços do Google Firebase para entendermos como ele está sendo jogado e corrigirmos problemas:</p>
+    <ul>
+      <li><strong>Firebase Analytics:</strong> registra eventos do jogo, como abrir uma cruzadinha, usar uma dica, vencer, o tempo da partida e a visualização de anúncios com recompensa, junto com dados técnicos do aparelho (modelo, versão do Android, idioma e país aproximado) e um identificador do app gerado pelo Firebase. Não inclui nome, e-mail nem nada que você digite.</li>
+      <li><strong>Firebase Crashlytics:</strong> quando o jogo trava, envia um relatório técnico do erro (o que o app estava fazendo, modelo do aparelho e versão do sistema).</li>
+    </ul>
+    <p>Usamos esses dados só de forma agregada, para melhorar o jogo e a dificuldade das cruzadinhas. Eles são processados pelo Google conforme a <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">política de privacidade do Firebase</a> e não são vendidos. Os dados de análise ficam guardados por até 14 meses.</p>
+  </section>
+
     <section id="conexao-com-a-internet">
     <h2>Conexão com a internet</h2>
     <p>O app pode baixar de um servidor nosso um arquivo de configuração do jogo (por exemplo, o ajuste de dificuldade). Esse download não envia dados seus. Como em qualquer acesso à internet, o servidor recebe o endereço IP do aparelho, que não é usado para identificar você.</p>
@@ -212,7 +223,7 @@ footer a:hover { text-decoration: underline; }
 
     <section id="seus-direitos-lgpd">
     <h2>Seus direitos (LGPD)</h2>
-    <p>Como não guardamos dados pessoais em nossos servidores, não temos informações suas para acessar, corrigir ou excluir. Os dados do jogo ficam no seu aparelho e você pode apagá-los a qualquer momento limpando os dados do app. Para os dados usados em anúncios, você pode gerenciar o identificador de publicidade no Android e consultar as ferramentas de privacidade do Google.</p>
+    <p>Não pedimos cadastro nem guardamos dados que identifiquem você pelo nome. Os dados do jogo ficam no seu aparelho e você pode apagá-los a qualquer momento limpando os dados do app; isso também gera um novo identificador do Firebase. Se quiser pedir a exclusão das estatísticas de uso ligadas ao seu aparelho, escreva para o contato abaixo. Para os dados usados em anúncios, você pode gerenciar o identificador de publicidade no Android e consultar as ferramentas de privacidade do Google.</p>
   </section>
 
     <section id="mudancas-nesta-politica">
