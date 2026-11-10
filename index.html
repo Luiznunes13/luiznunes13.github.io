@@ -22,6 +22,11 @@
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-L38EMKC66M');
+  // Clique em "Baixar na Google Play" vira o evento principal clique_play (com o jogo).
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a[href*="play.google.com"]');
+    if (a) gtag('event', 'clique_play', { jogo: new URL(a.href).searchParams.get('id') || 'loja' });
+  });
 </script>
 <link rel="icon" href="assets/rnh/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
