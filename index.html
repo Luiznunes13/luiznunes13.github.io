@@ -21,6 +21,14 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
+  // Tráfego interno: não conta testes locais nem quem abriu o site com ?interno=1
+  // (fica lembrado nesse navegador; ?interno=0 volta a contar).
+  try {
+    const q = new URLSearchParams(location.search).get('interno');
+    if (q !== null) localStorage.setItem('rnh_interno', q === '0' ? '' : '1');
+    if (localStorage.getItem('rnh_interno') || /^(localhost|127\.0\.0\.1)$/.test(location.hostname))
+      window['ga-disable-G-L38EMKC66M'] = true;
+  } catch (e) {}
   gtag('config', 'G-L38EMKC66M');
   // Clique em "Baixar na Google Play" vira o evento principal clique_play (com o jogo).
   document.addEventListener('click', e => {
