@@ -250,32 +250,18 @@ h2 { font: 900 clamp(2rem, 4.6vw, 3.4rem)/1.05 var(--display); margin: 1rem 0 0;
 .stroop-btns span { height: 46px; border-radius: 12px; background: var(--c); border: 2px solid var(--ink); box-shadow: inset 0 -4px 0 rgba(0,0,0,.2); transition: transform .15s; }
 .stroop-btns span.hit { transform: scale(.92); outline: 3px solid var(--ink); }
 
-/* ---------- em produção (oficina) ---------- */
-.wip {
-  position: relative; overflow: hidden; display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: end;
-  padding: clamp(1.5rem, 4vw, 2.6rem);
-}
-/* oficina no fundo, apagada do lado do texto pra não atrapalhar a leitura */
-.wip::before {
-  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
-  background:
-    linear-gradient(90deg, var(--paper-2) 40%, rgba(246,241,228,.55) 75%, rgba(246,241,228,.35)),
-    url("assets/rnh/oficina.webp") center 40%/cover;
-}
-.wip > * { position: relative; z-index: 1; }
-.wip .art.crossword { display: grid; grid-template-columns: repeat(5, 1fr); grid-auto-rows: 1fr; gap: 3px; height: 90px; width: min(100%, 230px); margin-bottom: 1.3rem; background: var(--ink); padding: 3px; border-radius: 8px; }
-.wip .art.crossword i { display: grid; place-items: center; border-radius: 3px; background: var(--bubble); color: var(--ink); font: 900 .9rem/1 var(--display); }
-.wip .art.crossword i.blk { background: var(--ink); }
-.wip h3 { font: 900 1.8rem/1.1 var(--display); margin: .8rem 0 .5rem; }
-.wip p { color: var(--ink-2); margin: 0; max-width: 32rem; }
-.wip .progress { margin-top: 1.4rem; max-width: 32rem; }
-.bar { height: 14px; border-radius: 8px; background: var(--paper-3); border: 2px solid var(--ink); overflow: hidden; }
-.bar i { display: block; height: 100%; background: repeating-linear-gradient(-45deg, var(--gold) 0 10px, #b47c12 10px 20px); width: var(--w); }
-.progress small { display: flex; justify-content: space-between; color: var(--ink-2); font-size: .88rem; font-weight: 600; margin-bottom: .45rem; }
-.wip .crew { display: flex; align-items: flex-end; gap: 1.2rem; }
-.wip .crew .who { display: flex; flex-direction: column; align-items: center; gap: .9rem; }
-.wip .crew img { width: 150px; }
-.wip .crew .mec { width: 170px; }
+/* ---------- Cruzadinhas: tela do celular ---------- */
+.cw-top { width: 100%; display: flex; justify-content: space-between; align-items: center; margin: 6px 0 12px; font: 900 .9rem/1 var(--display); color: var(--ink); }
+.cw-dots { display: flex; gap: 3px; }
+.cw-dots i { width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid var(--ink); background: var(--red); }
+.cw-dots i.off { background: transparent; }
+.cw-board { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 2px; width: 100%; padding: 2px; background: var(--ink); border-radius: 6px; }
+.cw-board i { aspect-ratio: 1; display: grid; place-items: center; border-radius: 2px; background: var(--bubble); color: #2f7a4b; font: 900 .95rem/1 var(--display); font-style: normal; }
+.cw-board i.q { background: #3a3128; color: #d8cfb4; font: 600 .42rem/1.15 var(--body); padding: 2px; text-align: center; overflow: hidden; }
+.cw-board i.sel { background: var(--gold); }
+.cw-clue { width: 100%; margin-top: 12px; padding: 9px 8px; border-radius: 9px; background: #2b251c; color: #f6f1e4; font: 600 .66rem/1.25 var(--body); text-align: center; }
+.cw-keys { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; width: 100%; margin-top: auto; padding-top: 10px; }
+.cw-keys i { height: 20px; border-radius: 6px; background: #4a4234; color: #f6f1e4; display: grid; place-items: center; font: 700 .55rem/1 var(--body); font-style: normal; }
 
 /* ---------- personagens (página de jornal) ---------- */
 .cast-page { padding: clamp(1.4rem, 3vw, 2.4rem); }
@@ -363,8 +349,6 @@ footer a:hover { text-decoration: underline; }
   .hero .wrap, .game, .studio { grid-template-columns: 1fr; }
   .game.alt .phone-col { order: 0; }
   .facade { order: -1; }
-  .wip { grid-template-columns: 1fr; }
-  .wip .crew { justify-content: flex-end; }
   footer .wrap { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 760px) {
@@ -388,8 +372,6 @@ footer a:hover { text-decoration: underline; }
   .owner img { width: 84px; height: 84px; }
   .owner .bubble { font-size: .85rem; }
   .game { padding-top: 3rem; }
-  .wip .crew img { width: 110px; }
-  .wip .crew .mec { width: 130px; }
 }
 @media (max-width: 480px) {
   footer .wrap { grid-template-columns: 1fr; }
@@ -546,44 +528,49 @@ footer a:hover { text-decoration: underline; }
           </div>
         </div>
       </article>
-    </div>
-  </section>
 
-  <!-- EM PRODUÇÃO: a oficina -->
-  <section id="em-producao">
-    <div class="wrap">
-      <div class="sec-head reveal">
-        <div>
-          <div class="eyebrow">Na oficina</div>
-          <h2>A próxima máquina da casa.</h2>
+      <article class="game panel reveal">
+        <div class="owner">
+          <span class="bubble right" style="--tail:45%">Essa eu sei!</span>
+          <img src="assets/rnh/palpiteiro.webp" alt="O Palpiteiro" width="160" height="160">
         </div>
-        <p>O Mecânico está apertando os últimos parafusos. Logo mais ela vai para o salão.</p>
-      </div>
-      <div class="wip panel reveal">
-        <div>
-          <div class="art crossword" aria-hidden="true">
-            <i class="blk"></i><i>C</i><i>A</i><i class="blk"></i><i>P</i>
-            <i>R</i><i>O</i><i class="blk"></i><i>D</i><i>A</i>
-            <i>U</i><i class="blk"></i><i>D</i><i>I</i><i>L</i>
-            <i>Z</i><i>N</i><i>A</i><i class="blk"></i><i>A</i>
+        <div class="game-info">
+          <div class="game-id">
+            <img src="cruzadinhas-icon.png" alt="Ícone do Cruzadinhas House" width="76" height="76">
+            <div>
+              <span class="tag">Palavras · Diário</span>
+              <h3>Cruzadinhas House</h3>
+            </div>
           </div>
-          <span class="tag">Palavra cruzada · Em breve</span>
-          <h3>Cruzadinhas House</h3>
-          <p>Palavras cruzadas em português, com três níveis de dificuldade e centenas de cruzadinhas para resolver. Quem toma conta dela é o Palpiteiro, aquele que dá pitaco em tudo.</p>
-          <div class="progress">
-            <small><span>Em desenvolvimento</span><span>80%</span></small>
-            <div class="bar"><i style="--w:80%"></i></div>
+          <p>Palavras cruzadas em português, com dicas escritas à mão e três níveis: do fácil, com palavras do dia a dia, ao difícil. Todo dia tem um desafio novo, e o Palpiteiro dá um pitaco quando você trava.</p>
+          <ul class="chips">
+            <li>300 cruzadinhas</li><li>Desafio do dia</li><li>Sequência de dias</li><li>Grátis</li>
+          </ul>
+          <div class="store-row">
+            <a class="store" href="https://play.google.com/store/apps/details?id=com.nunes.cruzadinhashouse" target="_blank" rel="noopener" title="Baixar na Google Play">
+              <svg width="24" height="26" viewBox="0 0 24 26" aria-hidden="true"><path d="M1.2.6 13.4 13 1.2 25.4A1.6 1.6 0 0 1 .5 24V2c0-.6.3-1.1.7-1.4Z" fill="#00d7fe"/><path d="m17.5 8.9-4.1 4.1-12.2-12.4c.4-.3 1-.3 1.6 0Z" fill="#00f076"/><path d="M13.4 13 17.5 17.1 2.8 25.4c-.6.3-1.2.3-1.6 0Z" fill="#ff3a44"/><path d="m17.5 8.9 4.7 2.7c1.1.6 1.1 2.2 0 2.8l-4.7 2.7L13.4 13Z" fill="#ffd500"/></svg>
+              <span><small>Disponível no</small><b>Google Play</b></span>
+            </a>
+            <a class="link-sm" href="cruzadinhas/privacidade.html">Política de privacidade</a>
           </div>
-          <a class="link-sm" href="cruzadinhas/privacidade.html">Política de privacidade</a>
         </div>
-        <div class="crew">
-          <div class="who">
-            <span class="bubble down" style="--tail:45%">Essa eu sei!</span>
-            <img src="assets/rnh/palpiteiro_corpo.webp" alt="O Palpiteiro, de boina e óculos de lente grossa, com o dedo levantado" width="312" height="512">
+        <div class="phone-col">
+          <div class="phone" style="--tilt:5deg">
+            <div class="screen" aria-hidden="true">
+              <div class="cw-top"><span>CRUZADINHA</span><span class="cw-dots"><i></i><i></i><i></i><i></i><i class="off"></i></span></div>
+              <div class="cw-board">
+                <i class="q"></i><i class="q">↓ Cômodo</i><i class="q">↓ Afeto</i><i class="q">↓ Uiva pra Lua</i><i class="q">↓ Da roda</i>
+                <i class="q">→ Cômodo da casa</i><i>S</i><i>A</i><i>L</i><i>A</i>
+                <i class="q">→ Afeto</i><i>A</i><i>M</i><i>O</i><i>R</i>
+                <i class="q">→ Uiva pra Lua</i><i>L</i><i>O</i><i class="sel"></i><i>O</i>
+                <i class="q">→ Da roda</i><i>A</i><i></i><i></i><i>S</i>
+              </div>
+              <div class="cw-clue">→ Uiva pra Lua</div>
+              <div class="cw-keys"><i>Q</i><i>W</i><i>E</i><i>R</i><i>T</i><i>Y</i><i>U</i><i>A</i><i>S</i><i>D</i><i>F</i><i>G</i><i>H</i><i>L</i></div>
+            </div>
           </div>
-          <img class="mec" src="assets/rnh/mecanico_apertando.webp" alt="O Mecânico apertando um parafuso com a chave inglesa" width="480" height="508">
         </div>
-      </div>
+      </article>
     </div>
   </section>
 
@@ -735,7 +722,7 @@ footer a:hover { text-decoration: underline; }
     </div>
     <div>
       <h4>Jogos</h4>
-      <ul><li><a href="#jogos">Block Puzzle House</a></li><li><a href="#jogos">Brain House</a></li><li><a href="#em-producao">Cruzadinhas House</a></li></ul>
+      <ul><li><a href="#jogos">Block Puzzle House</a></li><li><a href="#jogos">Brain House</a></li><li><a href="#jogos">Cruzadinhas House</a></li></ul>
     </div>
     <div>
       <h4>Privacidade</h4>
