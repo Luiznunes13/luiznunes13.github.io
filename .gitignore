@@ -1,0 +1,5 @@
+# Dados e dependências do backend: ficam só na VM (o deploy roda git clean -fd,
+# que apaga arquivo não rastreado -- menos os ignorados aqui).
+backend/node_modules/
+backend/scores.json
+backend/scores.json.tmp

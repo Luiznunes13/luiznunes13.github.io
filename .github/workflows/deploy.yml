@@ -23,7 +23,15 @@ jobs:
             sudo git fetch origin
             sudo git reset --hard origin/main
             sudo git clean -fd
+            # Backend do leaderboard: o git clean apagava o node_modules (o
+            # processo só seguia de pé por já estar carregado na memória).
+            cd /var/www/html/backend
+            sudo npm ci --omit=dev --no-audit --no-fund
+            cd /var/www/html
             sudo chown -R www-data:www-data /var/www/html
             sudo chmod -R 755 /var/www/html
             sudo systemctl reload nginx
+            # Recarrega o backend com o código novo (roda com o usuário da VM).
+            pm2 restart housegames-backend --update-env || (cd /var/www/html/backend && pm2 start server.js --name housegames-backend)
+            pm2 save
             echo "Deployment successful!"
