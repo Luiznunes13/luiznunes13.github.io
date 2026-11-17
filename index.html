@@ -829,5 +829,19 @@ footer a:hover { text-decoration: underline; }
   if (!reduce) setInterval(nextStroop, 2000);
 })();
 </script>
+<script>
+// No PC, mailto: só abre se houver um programa de e-mail instalado; senão o clique
+// não faz nada. Com mouse, abre a tela de escrever do Gmail já com destinatário e
+// assunto. No celular (toque) segue o mailto:, que abre o app de e-mail.
+// ponytail: quem usa Outlook web no PC cai no Gmail; o endereço segue visível no rodapé.
+if (matchMedia('(pointer: fine)').matches) {
+  document.querySelectorAll('a[href^="mailto:"]').forEach(a => a.addEventListener('click', e => {
+    const u = new URL(a.href);
+    const q = new URLSearchParams({ view: 'cm', fs: '1', to: u.pathname, su: u.searchParams.get('subject') || '' });
+    e.preventDefault();
+    window.open('https://mail.google.com/mail/?' + q, '_blank', 'noopener');
+  }));
+}
+</script>
 </body>
 </html>
