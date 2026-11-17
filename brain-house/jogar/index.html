@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Jogar Brain House</title>
+<meta name="description" content="Jogue o Brain House no navegador: Stroop, sequência e N-back. A versão completa é grátis na Google Play.">
+<meta name="theme-color" content="#ece4d0">
+<meta property="og:title" content="Jogue o Brain House no navegador">
+<meta property="og:description" content="A cor ou a palavra? Treine memória e atenção. Grátis na Google Play.">
+<meta property="og:image" content="https://rednosegamehouse.duckdns.org/assets/rnh/fachada_16x9.webp">
+<meta property="og:url" content="https://rednosegamehouse.duckdns.org/brain-house/jogar/">
+<!-- Google tag (gtag.js): mesmo do site -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-L38EMKC66M"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  try {
+    if (localStorage.getItem('rnh_interno') || /^(localhost|127\.0\.0\.1)$/.test(location.hostname))
+      window['ga-disable-G-L38EMKC66M'] = true;
+  } catch (e) {}
+  gtag('config', 'G-L38EMKC66M');
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a[href*="play.google.com"]');
+    if (a) gtag('event', 'clique_play', { jogo: new URL(a.href).searchParams.get('id') || 'loja', origem: 'demo_web' });
+  });
+</script>
+<link rel="icon" href="../../brain-house-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@800;900&family=Libre+Franklin:wght@500;700&display=swap">
+<style>
+:root {
+  --paper: #ece4d0;
+  --ink: #332c22;
+  --muted: #74684f;
+  --green: #3f9d64;
+  --display: "Playfair Display", Georgia, serif;
+  --body: "Libre Franklin", Arial, system-ui, sans-serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 500 1rem/1.5 var(--body);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 16px max(16px, env(safe-area-inset-left, 0px)) 24px;
+  min-height: 100dvh;
+}
+header { text-align: center; }
+h1 { font: 900 clamp(1.6rem, 5vw, 2.4rem)/1.1 var(--display); margin: 0; }
+header p { margin: 4px 0 0; color: var(--muted); }
+.phone {
+  /* proporção de celular: o jogo foi feito em retrato */
+  width: min(100%, 420px, calc((100dvh - 230px) * 9 / 16));
+  aspect-ratio: 9 / 16;
+  border: 3px solid var(--ink);
+  border-radius: 28px;
+  overflow: hidden;
+  background: #1b1f3b;
+  box-shadow: 6px 6px 0 var(--ink);
+}
+.phone iframe { width: 100%; height: 100%; border: 0; display: block; }
+.play {
+  display: inline-block;
+  background: var(--green);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.15rem;
+  padding: 14px 26px;
+  border: 3px solid var(--ink);
+  border-radius: 999px;
+  box-shadow: 4px 4px 0 var(--ink);
+  text-align: center;
+}
+.play:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink); }
+small { color: var(--muted); text-align: center; max-width: 420px; }
+small a { color: inherit; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Brain House</h1>
+  <p>Jogue aqui no navegador. Toque na tela para começar.</p>
+</header>
+<div class="phone">
+  <iframe src="game/index.html" title="Brain House" allow="autoplay; fullscreen"></iframe>
+</div>
+<a class="play" href="https://play.google.com/store/apps/details?id=com.nunes.brainhouse" target="_blank" rel="noopener">Baixe grátis na Google Play e salve seu recorde no celular</a>
+<small>O progresso daqui fica só neste navegador. <a href="../../">Voltar para a Red Nose Game House</a> · <a href="../privacidade.html">Privacidade</a></small>
+</body>
+</html>
